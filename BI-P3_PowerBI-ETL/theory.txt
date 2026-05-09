@@ -1,0 +1,732 @@
+ASSIGNMENT NO: 3
+TITLE: Perform the Extraction Transformation and Loading (ETL) Process to Construct the Database in Power BI
+
+--------------------------------------------------------------------
+1. AIM
+--------------------------------------------------------------------
+
+To perform ETL (Extraction, Transformation, and Loading) process using Power BI Desktop and visualize the transformed data using different charts and reports.
+
+--------------------------------------------------------------------
+2. SOFTWARE REQUIREMENTS
+--------------------------------------------------------------------
+
+1. Windows Operating System
+2. Power BI Desktop
+3. Internet Connection
+4. OData Feed Dataset
+
+--------------------------------------------------------------------
+3. THEORY
+--------------------------------------------------------------------
+
+ETL stands for:
+
+1. Extract
+2. Transform
+3. Load
+
+ETL is one of the most important processes in Business Intelligence and Data Warehousing.
+
+Organizations receive data from multiple systems such as:
+- Excel
+- CSV
+- Databases
+- APIs
+- Cloud platforms
+
+Raw data cannot be directly analyzed because:
+- It may contain errors
+- It may contain null values
+- It may contain unwanted columns
+- Data types may be incorrect
+
+Therefore, ETL process is used to prepare data for analysis and reporting.
+
+Power BI provides Power Query Editor for performing ETL operations without coding.
+
+--------------------------------------------------------------------
+4. ETL PROCESS THEORY
+--------------------------------------------------------------------
+
+=================================================
+1. EXTRACT
+=================================================
+
+Definition:
+Extract means collecting data from different sources.
+
+Examples:
+- Excel
+- CSV
+- SQL Server
+- Oracle
+- OData Feed
+
+Purpose:
+To retrieve raw data for processing.
+
+In this practical:
+Data is extracted using OData Feed.
+
+-------------------------------------------------
+
+=================================================
+2. TRANSFORM
+=================================================
+
+Definition:
+Transform means modifying and cleaning data.
+
+Transformation operations:
+- Removing columns
+- Renaming columns
+- Changing data types
+- Filtering rows
+- Creating custom columns
+- Handling null values
+
+Purpose:
+To improve data quality and make it suitable for analysis.
+
+-------------------------------------------------
+
+=================================================
+3. LOAD
+=================================================
+
+Definition:
+Load means storing transformed data into Power BI model.
+
+Purpose:
+To use processed data for reporting and visualization.
+
+--------------------------------------------------------------------
+5. EXPLANATION OF PRACTICAL
+--------------------------------------------------------------------
+
+In this practical, Power BI is used to perform ETL operations using OData Feed.
+
+The practical includes:
+1. Extracting data from OData Feed
+2. Opening Query Editor
+3. Transforming data
+4. Loading transformed data into Power BI
+5. Creating visualizations
+
+Visualizations help analyze:
+- Orders by country
+- Sales trends
+- Yearly analysis
+- Business insights
+
+This practical demonstrates how Power BI can perform complete ETL workflow and create interactive reports.
+
+--------------------------------------------------------------------
+6. ALGORITHM
+--------------------------------------------------------------------
+
+Step 1:
+Open Power BI Desktop.
+
+Step 2:
+Connect to OData Feed.
+
+Step 3:
+Extract Orders dataset.
+
+Step 4:
+Open Power Query Editor.
+
+Step 5:
+Remove unnecessary columns.
+
+Step 6:
+Rename columns.
+
+Step 7:
+Change data types.
+
+Step 8:
+Create custom column.
+
+Step 9:
+Apply filters.
+
+Step 10:
+Load transformed data.
+
+Step 11:
+Create visualizations.
+
+Step 12:
+Analyze charts and reports.
+
+--------------------------------------------------------------------
+7. STEPS TO EXECUTE PRACTICAL
+--------------------------------------------------------------------
+
+=================================================
+A) EXTRACT DATA FROM ODATA FEED
+=================================================
+
+Step 1:
+Open Power BI Desktop.
+
+Step 2:
+Click:
+Home → Get Data
+
+Step 3:
+Select:
+OData Feed
+
+Step 4:
+Click Connect.
+
+Step 5:
+Paste the following URL:
+
+http://services.odata.org/V3/Northwind/Northwind.svc/
+
+Step 6:
+Click OK.
+
+Step 7:
+Navigator window opens.
+
+Step 8:
+Select:
+Orders Table
+
+Step 9:
+Click:
+Transform Data
+
+-------------------------------------------------
+
+OUTPUT:
+- OData Connection Window
+- Navigator Window
+- Orders Table
+
+--------------------------------------------------------------------
+B) TRANSFORM DATA USING QUERY EDITOR
+--------------------------------------------------------------------
+
+=================================================
+1. REMOVE UNNECESSARY COLUMNS
+=================================================
+
+Step 1:
+Select columns:
+- OrderID
+- CustomerID
+- OrderDate
+- ShipCountry
+
+Step 2:
+Right Click →
+Remove Other Columns
+
+Purpose:
+Keeps only required columns.
+
+-------------------------------------------------
+
+OUTPUT:
+- Selected Columns Only
+
+=================================================
+2. RENAME COLUMNS
+=================================================
+
+Step 1:
+Double click column name.
+
+Step 2:
+Rename:
+- OrderID → Order_ID
+- CustomerID → Customer_ID
+
+Purpose:
+Improves readability.
+
+-------------------------------------------------
+
+OUTPUT:
+- Renamed Columns
+
+=================================================
+3. CHANGE DATA TYPES
+=================================================
+
+Step 1:
+Click icon beside column name.
+
+Step 2:
+Select:
+- Order_ID → Whole Number
+- OrderDate → Date
+- ShipCountry → Text
+
+Purpose:
+Ensures proper calculations.
+
+-------------------------------------------------
+
+OUTPUT:
+- Changed Data Types
+
+=================================================
+4. CREATE CUSTOM COLUMN
+=================================================
+
+Step 1:
+Click:
+Add Column → Custom Column
+
+Step 2:
+Enter formula:
+
+Order_Year = Date.Year([OrderDate])
+
+Step 3:
+Click OK.
+
+Purpose:
+Extracts year from order date.
+
+-------------------------------------------------
+
+OUTPUT:
+- New Custom Column
+
+=================================================
+5. FILTER DATA
+=================================================
+
+Step 1:
+Click dropdown in ShipCountry column.
+
+Step 2:
+Select specific countries.
+
+Purpose:
+Filters unwanted records.
+
+-------------------------------------------------
+
+OUTPUT:
+- Filtered Dataset
+
+--------------------------------------------------------------------
+C) LOAD DATA INTO POWER BI
+--------------------------------------------------------------------
+
+Step 1:
+Click:
+Home → Close & Apply
+
+Step 2:
+Wait until data loads.
+
+Purpose:
+Loads transformed data into Power BI model.
+
+-------------------------------------------------
+
+OUTPUT:
+- Loaded Dataset in Report View
+
+--------------------------------------------------------------------
+8. VISUALIZATION THEORY
+--------------------------------------------------------------------
+
+Data Visualization means graphical representation of data.
+
+Purpose:
+1. Identify trends
+2. Compare values
+3. Analyze business performance
+4. Improve decision making
+
+Power BI provides interactive visualizations such as:
+- Bar Charts
+- Pie Charts
+- Line Charts
+- Tables
+- Maps
+- KPI Cards
+
+--------------------------------------------------------------------
+9. SHORT OVERVIEW OF VISUALIZATION IN POWER BI
+--------------------------------------------------------------------
+
+=================================================
+HOW TO CREATE VISUALIZATIONS
+=================================================
+
+Step 1:
+Go to Report View.
+
+Step 2:
+In the Visualizations pane, select a graph type.
+
+Step 3:
+Drag required fields into:
+- Axis
+- Values
+- Legend
+- Filters
+
+Step 4:
+Power BI automatically creates graph.
+
+Step 5:
+Resize and format chart.
+
+-------------------------------------------------
+
+=================================================
+HOW TO SELECT GRAPH TYPE
+=================================================
+
+Bar Chart:
+Used for category comparison.
+
+Line Chart:
+Used for trends over time.
+
+Pie Chart:
+Used for percentage distribution.
+
+Table:
+Used for detailed records.
+
+Card:
+Used for single values like Total Sales.
+
+-------------------------------------------------
+
+=================================================
+UNDERSTANDING FIELDS IN POWER BI
+=================================================
+
+Axis:
+Contains categories.
+
+Example:
+Country, Year, Product
+
+Values:
+Contains numerical values.
+
+Example:
+Sales, Quantity, Count
+
+Legend:
+Used for grouping categories.
+
+Filters:
+Used for filtering records.
+
+--------------------------------------------------------------------
+10. STEPS FOR VISUALIZATION
+--------------------------------------------------------------------
+
+=================================================
+A) BAR CHART
+=================================================
+
+Purpose:
+Compare orders by country.
+
+-------------------------------------------------
+
+Step 1:
+Select:
+Clustered Bar Chart
+
+Step 2:
+Drag:
+- ShipCountry → Axis
+- Order_ID → Values
+
+Step 3:
+Power BI automatically counts orders.
+
+-------------------------------------------------
+
+OUTPUT:
+- Orders by Country Bar Chart
+
+=================================================
+B) LINE CHART
+=================================================
+
+Purpose:
+Analyze yearly trend.
+
+-------------------------------------------------
+
+Step 1:
+Select:
+Line Chart
+
+Step 2:
+Drag:
+- Order_Year → Axis
+- Order_ID → Values
+
+Step 3:
+Power BI creates yearly trend graph.
+
+-------------------------------------------------
+
+OUTPUT:
+- Yearly Trend Line Chart
+
+=================================================
+C) PIE CHART
+=================================================
+
+Purpose:
+Analyze country-wise distribution.
+
+-------------------------------------------------
+
+Step 1:
+Select:
+Pie Chart
+
+Step 2:
+Drag:
+- ShipCountry → Legend
+- Order_ID → Values
+
+-------------------------------------------------
+
+OUTPUT:
+- Country Distribution Pie Chart
+
+=================================================
+D) TABLE VISUAL
+=================================================
+
+Purpose:
+Display records in tabular form.
+
+-------------------------------------------------
+
+Step 1:
+Select:
+Table Visual
+
+Step 2:
+Drag:
+- Order_ID
+- Customer_ID
+- ShipCountry
+- OrderDate
+
+-------------------------------------------------
+
+OUTPUT:
+- Orders Table
+
+--------------------------------------------------------------------
+11. EXPLANATION OF IMPORTANT POWER BI FEATURES
+--------------------------------------------------------------------
+
+=================================================
+1. GET DATA
+=================================================
+
+Purpose:
+Imports data from external sources.
+
+Reason:
+Required for extraction process.
+
+-------------------------------------------------
+
+=================================================
+2. QUERY EDITOR
+=================================================
+
+Purpose:
+Transforms and cleans data.
+
+Reason:
+Improves data quality.
+
+-------------------------------------------------
+
+=================================================
+3. CUSTOM COLUMN
+=================================================
+
+Purpose:
+Creates calculated columns.
+
+Reason:
+Adds additional business insights.
+
+-------------------------------------------------
+
+=================================================
+4. FILTERS
+=================================================
+
+Purpose:
+Shows only required records.
+
+Reason:
+Improves analysis clarity.
+
+-------------------------------------------------
+
+=================================================
+5. VISUALIZATION PANE
+=================================================
+
+Purpose:
+Contains graph options.
+
+Reason:
+Used for report creation.
+
+--------------------------------------------------------------------
+12. ADVANTAGES OF POWER BI ETL
+--------------------------------------------------------------------
+
+1. Easy data integration
+2. Interactive reports
+3. No coding required
+4. Fast transformation
+5. Supports multiple data sources
+6. Real-time dashboards
+
+--------------------------------------------------------------------
+13. APPLICATIONS OF POWER BI
+--------------------------------------------------------------------
+
+1. Sales Analysis
+2. Banking Analytics
+3. Financial Reporting
+4. Healthcare Dashboards
+5. Marketing Analytics
+6. Inventory Management
+
+--------------------------------------------------------------------
+14. POSSIBLE VIVA QUESTIONS WITH ANSWERS
+--------------------------------------------------------------------
+
+Q1. What is ETL?
+
+Answer:
+ETL stands for Extract, Transform, and Load. It is a process used to collect, clean, and load data for analysis.
+
+-------------------------------------------------
+
+Q2. What is OData Feed?
+
+Answer:
+OData (Open Data Protocol) is a web protocol used to access and share data online.
+
+-------------------------------------------------
+
+Q3. What is Power Query Editor?
+
+Answer:
+Power Query Editor is a Power BI tool used for transforming and cleaning data before loading.
+
+-------------------------------------------------
+
+Q4. Why are data types important?
+
+Answer:
+Correct data types ensure proper calculations and visualization.
+
+-------------------------------------------------
+
+Q5. What is a Custom Column?
+
+Answer:
+A custom column is a calculated column created using formulas.
+
+-------------------------------------------------
+
+Q6. Why is visualization important?
+
+Answer:
+Visualization helps understand trends, patterns, and business insights quickly.
+
+-------------------------------------------------
+
+Q7. Difference between Bar Chart and Line Chart?
+
+Answer:
+
+Bar Chart:
+Used for comparison.
+
+Line Chart:
+Used for trends over time.
+
+-------------------------------------------------
+
+Q8. What is the purpose of Axis in visualization?
+
+Answer:
+Axis contains categories such as year, country, or product.
+
+-------------------------------------------------
+
+Q9. What is the purpose of Values field?
+
+Answer:
+Values field contains numerical values used in charts.
+
+-------------------------------------------------
+
+Q10. What happens when Close & Apply is clicked?
+
+Answer:
+Power BI applies all transformations and loads data into model.
+
+-------------------------------------------------
+
+Q11. What are filters used for?
+
+Answer:
+Filters are used to display only required records.
+
+-------------------------------------------------
+
+Q12. What is data transformation?
+
+Answer:
+Transformation means modifying and cleaning raw data.
+
+--------------------------------------------------------------------
+15. OUTPUTS OBTAINED
+--------------------------------------------------------------------
+
+1. OData Connection
+2. Orders Dataset
+3. Query Editor
+4. Transformed Dataset
+5. Custom Column
+6. Filtered Data
+7. Bar Chart
+8. Line Chart
+9. Pie Chart
+10. Table Visual
+
+--------------------------------------------------------------------
+16. CONCLUSION
+--------------------------------------------------------------------
+
+Thus, ETL process was successfully implemented using Power BI Desktop. Data was extracted from OData Feed, transformed using Query Editor, loaded into Power BI model, and visualized using interactive charts and reports.
