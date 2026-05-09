@@ -1,0 +1,278 @@
+========================================================
+PRACTICAL NO : 4
+CODE AND EXECUTION STEPS
+MongoDB Installation and CRUD Operations
+========================================================
+
+========================================================
+STEP 1 : INSTALL MONGODB : Ignore if already installed
+========================================================
+
+Command:
+
+sudo apt update
+
+Reason:
+Updates Ubuntu package list.
+
+--------------------------------------------------------
+
+Command:
+
+sudo apt install -y mongodb
+
+Reason:
+Installs MongoDB Community Server.
+
+========================================================
+STEP 2 : START MONGODB SERVICE
+========================================================
+
+Command:
+
+sudo systemctl start mongodb
+
+Reason:
+Starts MongoDB server.
+
+--------------------------------------------------------
+
+Command:
+
+sudo systemctl status mongodb
+
+Reason:
+Checks whether MongoDB service is running properly.
+
+========================================================
+STEP 3 : OPEN MONGODB SHELL
+========================================================
+
+Command:
+
+mongosh
+
+Reason:
+Opens MongoDB shell for database operations.
+
+========================================================
+STEP 4 : CREATE DATABASE
+========================================================
+
+Command:
+
+use studentDB
+
+Reason:
+Creates and switches to studentDB database.
+
+========================================================
+STEP 5 : CREATE COLLECTION AND INSERT DOCUMENT
+========================================================
+
+Command:
+
+db.students.insertOne({
+name:"John",
+age:20,
+city:"Pune"
+})
+
+Reason:
+Creates students collection and inserts first document.
+
+========================================================
+STEP 6 : INSERT MULTIPLE DOCUMENTS
+========================================================
+
+Command:
+
+db.students.insertMany([
+{
+name:"Rahul",
+age:22,
+city:"Mumbai"
+},
+{
+name:"Priya",
+age:21,
+city:"Delhi"
+},
+{
+name:"Amit",
+age:23,
+city:"Pune"
+}
+])
+
+Reason:
+Inserts multiple student documents into collection.
+
+========================================================
+STEP 7 : DISPLAY ALL DOCUMENTS
+========================================================
+
+Command:
+
+db.students.find()
+
+Reason:
+Displays all documents present in students collection.
+
+========================================================
+STEP 8 : FIND SPECIFIC DOCUMENT
+========================================================
+
+Command:
+
+db.students.findOne({
+name:"John"
+})
+
+Reason:
+Retrieves specific document matching condition.
+
+========================================================
+STEP 9 : UPDATE DOCUMENT
+========================================================
+
+Command:
+
+db.students.updateOne(
+{name:"John"},
+{$set:{age:25}}
+)
+
+Reason:
+Updates age field of John document.
+
+========================================================
+STEP 10 : VERIFY UPDATED DOCUMENT
+========================================================
+
+Command:
+
+db.students.findOne({
+name:"John"
+})
+
+Reason:
+Checks whether update operation was successful.
+
+========================================================
+STEP 11 : DELETE DOCUMENT
+========================================================
+
+Command:
+
+db.students.deleteOne({
+name:"Amit"
+})
+
+Reason:
+Deletes Amit document from collection.
+
+========================================================
+STEP 12 : VERIFY DELETED DOCUMENT
+========================================================
+
+Command:
+
+db.students.find()
+
+Reason:
+Displays remaining documents after deletion.
+
+========================================================
+EXPECTED OUTPUT
+========================================================
+
+Inserted Documents:
+
+{
+name:"John",
+age:20,
+city:"Pune"
+}
+
+{
+name:"Rahul",
+age:22,
+city:"Mumbai"
+}
+
+{
+name:"Priya",
+age:21,
+city:"Delhi"
+}
+
+--------------------------------------------------------
+
+Updated Output:
+
+{
+name:"John",
+age:25,
+city:"Pune"
+}
+
+--------------------------------------------------------
+
+Final Documents:
+
+{
+name:"John",
+age:25,
+city:"Pune"
+}
+
+{
+name:"Rahul",
+age:22,
+city:"Mumbai"
+}
+
+{
+name:"Priya",
+age:21,
+city:"Delhi"
+}
+
+========================================================
+IMPORTANT COMMANDS
+========================================================
+
+Show Databases:
+
+show dbs
+
+--------------------------------------------------------
+
+Show Collections:
+
+show collections
+
+--------------------------------------------------------
+
+Drop Collection:
+
+db.students.drop()
+
+--------------------------------------------------------
+
+Drop Database:
+
+db.dropDatabase()
+
+--------------------------------------------------------
+
+Exit MongoDB Shell:
+
+exit
+
+========================================================
+CONCLUSION
+========================================================
+
+Thus, we successfully installed MongoDB and performed CRUD operations such as Insert, Query, Update, and Delete on MongoDB collections.

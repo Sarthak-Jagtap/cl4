@@ -1,0 +1,294 @@
+========================================================
+PRACTICAL NO : 4
+TITLE : MongoDB Installation and CRUD Operations
+========================================================
+
+AIM:
+To install MongoDB and perform CRUD operations such as Insert, Query, Update, and Delete on MongoDB collections.
+
+========================================================
+OBJECTIVES
+========================================================
+
+1. To understand MongoDB installation process.
+2. To learn database and collection creation in MongoDB.
+3. To understand CRUD operations in MongoDB.
+4. To perform Insert, Query, Update, and Delete operations.
+5. To understand NoSQL document-oriented databases.
+
+========================================================
+SOFTWARE REQUIREMENTS
+========================================================
+
+1. Ubuntu Linux / Windows
+2. MongoDB Community Server
+3. MongoDB Shell (mongosh)
+4. Terminal / Command Prompt
+5. MongoDB Compass (Optional)
+
+========================================================
+THEORY
+========================================================
+
+MongoDB is a NoSQL document-oriented database used for storing large amounts of unstructured or semi-structured data.
+
+Unlike relational databases, MongoDB stores data in BSON documents.
+
+MongoDB provides:
+1. High scalability
+2. Flexible schema
+3. Fast performance
+4. Easy document management
+
+MongoDB stores:
+1. Databases
+2. Collections
+3. Documents
+
+--------------------------------------------------------
+1. Database
+--------------------------------------------------------
+
+A database is a container that stores collections.
+
+Example:
+
+studentDB
+
+--------------------------------------------------------
+2. Collection
+--------------------------------------------------------
+
+A collection stores multiple documents.
+
+Example:
+
+students
+
+--------------------------------------------------------
+3. Document
+--------------------------------------------------------
+
+A document is a record stored in JSON-like format.
+
+Example:
+
+{
+   name: "John",
+   age: 20
+}
+
+========================================================
+CRUD OPERATIONS
+========================================================
+
+CRUD stands for:
+
+1. Create
+2. Read
+3. Update
+4. Delete
+
+--------------------------------------------------------
+1. Create Operation
+--------------------------------------------------------
+
+Used to insert new documents into collection.
+
+Example:
+
+db.students.insertOne({name:"John",age:20})
+
+--------------------------------------------------------
+2. Read Operation
+--------------------------------------------------------
+
+Used to retrieve documents.
+
+Example:
+
+db.students.find()
+
+--------------------------------------------------------
+3. Update Operation
+--------------------------------------------------------
+
+Used to modify existing documents.
+
+Example:
+
+db.students.updateOne(
+{name:"John"},
+{$set:{age:21}}
+)
+
+--------------------------------------------------------
+4. Delete Operation
+--------------------------------------------------------
+
+Used to remove documents.
+
+Example:
+
+db.students.deleteOne({name:"John"})
+
+========================================================
+PRACTICAL EXPLANATION
+========================================================
+
+In this practical, MongoDB is installed and configured.
+
+A new database and collection are created.
+
+CRUD operations are performed on documents stored inside MongoDB collections.
+
+The practical demonstrates:
+1. Document insertion
+2. Querying documents
+3. Updating documents
+4. Deleting documents
+
+========================================================
+ADVANTAGES OF MONGODB
+========================================================
+
+1. Flexible schema support.
+2. High scalability.
+3. Fast query performance.
+4. Easy document storage.
+5. Suitable for Big Data applications.
+
+========================================================
+LIMITATIONS
+========================================================
+
+1. High memory usage.
+2. No complex joins like SQL.
+3. Data duplication possible.
+4. Less strict schema validation.
+
+========================================================
+VIVA QUESTIONS WITH ANSWERS
+========================================================
+
+1. What is MongoDB?
+
+Answer:
+MongoDB is a NoSQL document-oriented database used for storing and managing unstructured data.
+
+--------------------------------------------------------
+
+2. What is NoSQL?
+
+Answer:
+NoSQL means non-relational databases designed for flexible and scalable data storage.
+
+--------------------------------------------------------
+
+3. What is a document in MongoDB?
+
+Answer:
+A document is a JSON-like record stored inside a MongoDB collection.
+
+--------------------------------------------------------
+
+4. What is a collection?
+
+Answer:
+A collection is a group of MongoDB documents.
+
+--------------------------------------------------------
+
+5. What is a database in MongoDB?
+
+Answer:
+A database is a container that stores collections.
+
+--------------------------------------------------------
+
+6. What does CRUD stand for?
+
+Answer:
+CRUD stands for:
+1. Create
+2. Read
+3. Update
+4. Delete
+
+--------------------------------------------------------
+
+7. What is insertOne()?
+
+Answer:
+insertOne() inserts a single document into a collection.
+
+--------------------------------------------------------
+
+8. What is find()?
+
+Answer:
+find() retrieves documents from a collection.
+
+--------------------------------------------------------
+
+9. What is updateOne()?
+
+Answer:
+updateOne() modifies a single document in a collection.
+
+--------------------------------------------------------
+
+10. What is deleteOne()?
+
+Answer:
+deleteOne() removes a single document from a collection.
+
+--------------------------------------------------------
+
+11. What is BSON?
+
+Answer:
+BSON stands for Binary JSON used internally by MongoDB.
+
+--------------------------------------------------------
+
+12. Difference between SQL and MongoDB?
+
+Answer:
+
+SQL:
+1. Relational database
+2. Table-based storage
+3. Fixed schema
+
+MongoDB:
+1. NoSQL database
+2. Document-based storage
+3. Flexible schema
+
+--------------------------------------------------------
+
+13. What is MongoDB Compass?
+
+Answer:
+MongoDB Compass is a graphical user interface for MongoDB.
+
+--------------------------------------------------------
+
+14. Why is MongoDB used?
+
+Answer:
+MongoDB is used for scalable and flexible storage of large unstructured datasets.
+
+--------------------------------------------------------
+
+15. What are common MongoDB data types?
+
+Answer:
+String, Integer, Boolean, Array, Object, Date, Null.
+
+========================================================
+CONCLUSION
+========================================================
+
+Thus, we successfully installed MongoDB, created databases and collections, and performed CRUD operations such as Insert, Query, Update, and Delete on MongoDB documents.
