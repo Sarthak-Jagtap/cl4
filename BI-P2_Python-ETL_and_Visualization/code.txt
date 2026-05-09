@@ -1,0 +1,96 @@
+PRACTICAL 2 - CODE.TXT
+
+=================================================
+CELL 1
+=================================================
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+=================================================
+CELL 2
+=================================================
+
+data = pd.read_csv('sale_data.csv')
+
+data.head()
+
+=================================================
+CELL 3
+=================================================
+
+print(data.columns)
+
+data.info()
+
+data.describe()
+
+=================================================
+CELL 4
+=================================================
+
+data.columns = data.columns.str.upper()
+
+data = data.fillna(data.mean(numeric_only=True))
+
+data = data.fillna('Unknown')
+
+data.head()
+
+=================================================
+CELL 5
+=================================================
+
+data['PROFIT_MARGIN'] = data['PROFIT'] / data['SALES']
+
+data.head()
+
+=================================================
+CELL 6
+=================================================
+
+data.to_csv('processed_data.csv', index=False)
+
+print("Processed data saved successfully")
+
+=================================================
+CELL 7
+=================================================
+
+data.groupby('CATEGORY')['SALES'].sum().plot(kind='bar')
+
+plt.title("Sales by Category")
+
+plt.xlabel("Category")
+
+plt.ylabel("Sales")
+
+plt.show()
+
+=================================================
+CELL 8
+=================================================
+
+data['ORDERDATE'] = pd.to_datetime(data['ORDERDATE'])
+
+data.sort_values('ORDERDATE').plot(x='ORDERDATE', y='SALES')
+
+plt.title("Sales Trend Over Time")
+
+plt.xlabel("Order Date")
+
+plt.ylabel("Sales")
+
+plt.show()
+
+=================================================
+CELL 9
+=================================================
+
+data.groupby('CATEGORY')['SALES'].sum().plot(kind='pie', autopct='%1.1f%%')
+
+plt.title("Sales Distribution")
+
+plt.ylabel("")
+
+plt.show()

@@ -1,0 +1,635 @@
+ASSIGNMENT NO: 2
+TITLE: Data Visualization from Extraction Transformation and Loading (ETL) Process
+
+--------------------------------------------------------------------
+1. AIM
+--------------------------------------------------------------------
+
+To perform ETL (Extraction, Transformation, and Loading) process and visualize the data using Python and Jupyter Notebook.
+
+--------------------------------------------------------------------
+2. SOFTWARE REQUIREMENTS
+--------------------------------------------------------------------
+
+1. Ubuntu / Windows Operating System
+2. Jupyter Notebook
+3. Python
+4. Pandas Library
+5. Matplotlib Library
+
+--------------------------------------------------------------------
+3. THEORY
+--------------------------------------------------------------------
+
+ETL stands for:
+
+1. Extract
+2. Transform
+3. Load
+
+ETL is a data integration process used in Business Intelligence and Data Warehousing.
+
+=================================================
+1. EXTRACT
+=================================================
+
+Extraction means collecting data from different data sources.
+
+Sources:
+- CSV Files
+- Excel Files
+- Databases
+- APIs
+- Cloud Storage
+
+Purpose:
+To gather raw data for processing.
+
+=================================================
+2. TRANSFORM
+=================================================
+
+Transformation means cleaning and modifying data.
+
+Transformation operations:
+- Handling missing values
+- Removing duplicates
+- Renaming columns
+- Changing data types
+- Creating calculated columns
+- Filtering data
+
+Purpose:
+To improve data quality and prepare it for analysis.
+
+=================================================
+3. LOAD
+=================================================
+
+Loading means storing transformed data into a target system.
+
+Examples:
+- CSV File
+- Database
+- Data Warehouse
+- Power BI
+
+Purpose:
+To use processed data for reporting and analysis.
+
+--------------------------------------------------------------------
+4. EXPLANATION OF PRACTICAL
+--------------------------------------------------------------------
+
+In this practical, ETL process is implemented using Python.
+
+The practical includes:
+1. Extracting data from CSV file
+2. Transforming data using pandas
+3. Loading processed data into another CSV file
+4. Creating visualizations using matplotlib
+
+The visualizations help understand:
+- Sales distribution
+- Trends
+- Category analysis
+
+This practical demonstrates how raw data is converted into meaningful information.
+
+--------------------------------------------------------------------
+5. ALGORITHM
+--------------------------------------------------------------------
+
+Step 1:
+Import required libraries.
+
+Step 2:
+Load dataset using pandas.
+
+Step 3:
+Display dataset information.
+
+Step 4:
+Clean dataset by handling missing values.
+
+Step 5:
+Convert column names to uppercase.
+
+Step 6:
+Create new calculated column.
+
+Step 7:
+Save transformed dataset.
+
+Step 8:
+Create bar chart.
+
+Step 9:
+Create line chart.
+
+Step 10:
+Create pie chart.
+
+Step 11:
+Analyze output graphs.
+
+--------------------------------------------------------------------
+6. EXPLANATION OF ETL IMPLEMENTATION
+--------------------------------------------------------------------
+
+=================================================
+A) EXTRACTION
+=================================================
+
+The dataset is loaded from CSV file using pandas.
+
+Function Used:
+pd.read_csv()
+
+Purpose:
+Reads CSV file and converts it into DataFrame.
+
+Reason:
+Allows easy data manipulation and analysis.
+
+=================================================
+B) TRANSFORMATION
+=================================================
+
+Transformation operations performed:
+
+1. Handling missing values
+2. Renaming columns
+3. Creating new columns
+4. Data cleaning
+
+Purpose:
+To improve quality and usability of data.
+
+=================================================
+C) LOADING
+=================================================
+
+Processed data is stored into another CSV file.
+
+Function Used:
+to_csv()
+
+Purpose:
+Saves transformed dataset.
+
+Reason:
+Allows reuse of processed data.
+
+--------------------------------------------------------------------
+7. DATA VISUALIZATION THEORY
+--------------------------------------------------------------------
+
+Data Visualization means graphical representation of data.
+
+Purpose:
+- Understand trends
+- Compare values
+- Identify patterns
+- Improve decision making
+
+Visualization types used:
+
+1. Bar Chart
+2. Line Chart
+3. Pie Chart
+
+=================================================
+1. BAR CHART
+=================================================
+
+Used for:
+Comparing categorical values.
+
+Example:
+Sales by category.
+
+=================================================
+2. LINE CHART
+=================================================
+
+Used for:
+Analyzing trends over time.
+
+Example:
+Sales trend.
+
+=================================================
+3. PIE CHART
+=================================================
+
+Used for:
+Showing percentage distribution.
+
+Example:
+Sales distribution across categories.
+
+--------------------------------------------------------------------
+8. CODE EXPLANATION IN DETAIL
+--------------------------------------------------------------------
+
+=================================================
+CELL 1
+=================================================
+
+Code:
+import pandas as pd
+import matplotlib.pyplot as plt
+
+Explanation:
+
+1. pandas:
+Used for data manipulation and analysis.
+
+2. matplotlib.pyplot:
+Used for creating graphs and charts.
+
+Reason:
+Required for ETL operations and visualization.
+
+-------------------------------------------------
+
+=================================================
+CELL 2
+=================================================
+
+Code:
+data = pd.read_csv('sale_data.csv')
+
+data.head()
+
+Explanation:
+
+1. read_csv():
+Loads CSV dataset into DataFrame.
+
+2. data.head():
+Displays first 5 rows.
+
+Reason:
+Used to verify dataset loading.
+
+-------------------------------------------------
+
+=================================================
+CELL 3
+=================================================
+
+Code:
+print(data.columns)
+
+data.info()
+
+data.describe()
+
+Explanation:
+
+1. data.columns:
+Displays column names.
+
+2. data.info():
+Shows structure of dataset.
+
+3. data.describe():
+Shows statistical summary.
+
+Reason:
+Helps understand dataset before transformation.
+
+-------------------------------------------------
+
+=================================================
+CELL 4
+=================================================
+
+Code:
+data.columns = data.columns.str.upper()
+
+data = data.fillna(data.mean(numeric_only=True))
+
+data = data.fillna('Unknown')
+
+Explanation:
+
+1. str.upper():
+Converts column names to uppercase.
+
+Reason:
+Improves consistency.
+
+2. fillna():
+Handles missing values.
+
+Reason:
+Missing values may affect analysis and graphs.
+
+-------------------------------------------------
+
+=================================================
+CELL 5
+=================================================
+
+Code:
+data['PROFIT_MARGIN'] = data['PROFIT'] / data['SALES']
+
+Explanation:
+
+Creates new calculated column.
+
+Purpose:
+Calculates profit margin.
+
+Reason:
+Used for advanced business analysis.
+
+-------------------------------------------------
+
+=================================================
+CELL 6
+=================================================
+
+Code:
+data.to_csv('processed_data.csv', index=False)
+
+Explanation:
+
+Stores transformed dataset into CSV file.
+
+index=False:
+Prevents row numbers from being saved.
+
+Reason:
+Creates clean output file.
+
+-------------------------------------------------
+
+=================================================
+CELL 7
+=================================================
+
+Code:
+data.groupby('CATEGORY')['SALES'].sum().plot(kind='bar')
+
+plt.title("Sales by Category")
+
+plt.show()
+
+Explanation:
+
+1. groupby():
+Groups data by category.
+
+2. sum():
+Calculates total sales.
+
+3. plot(kind='bar'):
+Creates bar chart.
+
+Reason:
+Compares sales across categories.
+
+-------------------------------------------------
+
+=================================================
+CELL 8
+=================================================
+
+Code:
+data['ORDERDATE'] = pd.to_datetime(data['ORDERDATE'])
+
+data.sort_values('ORDERDATE').plot(x='ORDERDATE', y='SALES')
+
+plt.title("Sales Trend")
+
+plt.show()
+
+Explanation:
+
+1. to_datetime():
+Converts text into date format.
+
+2. sort_values():
+Sorts dataset by date.
+
+3. plot():
+Creates line graph.
+
+Reason:
+Shows sales trend over time.
+
+-------------------------------------------------
+
+=================================================
+CELL 9
+=================================================
+
+Code:
+data.groupby('CATEGORY')['SALES'].sum().plot(kind='pie', autopct='%1.1f%%')
+
+plt.title("Sales Distribution")
+
+plt.ylabel("")
+
+plt.show()
+
+Explanation:
+
+1. plot(kind='pie'):
+Creates pie chart.
+
+2. autopct:
+Displays percentages.
+
+Reason:
+Shows category-wise sales distribution.
+
+--------------------------------------------------------------------
+9. WHY EACH IMPORTANT FUNCTION IS USED
+--------------------------------------------------------------------
+
+=================================================
+1. read_csv()
+=================================================
+
+Purpose:
+Loads CSV dataset.
+
+Reason:
+Required for extraction step.
+
+=================================================
+2. fillna()
+=================================================
+
+Purpose:
+Handles missing values.
+
+Reason:
+Prevents errors and improves accuracy.
+
+=================================================
+3. groupby()
+=================================================
+
+Purpose:
+Groups data.
+
+Reason:
+Used for aggregation and analysis.
+
+=================================================
+4. plot()
+=================================================
+
+Purpose:
+Creates graphs.
+
+Reason:
+Helps visualize data.
+
+=================================================
+5. to_csv()
+=================================================
+
+Purpose:
+Saves processed dataset.
+
+Reason:
+Implements loading phase.
+
+--------------------------------------------------------------------
+10. POSSIBLE VIVA QUESTIONS WITH ANSWERS
+--------------------------------------------------------------------
+
+Q1. What is ETL?
+
+Answer:
+ETL stands for Extract, Transform, and Load. It is used to collect, process, and store data for analysis.
+
+-------------------------------------------------
+
+Q2. What is Extraction?
+
+Answer:
+Extraction means collecting data from different sources like CSV, Excel, or databases.
+
+-------------------------------------------------
+
+Q3. What is Transformation?
+
+Answer:
+Transformation means cleaning and modifying data before analysis.
+
+-------------------------------------------------
+
+Q4. What is Loading?
+
+Answer:
+Loading means storing transformed data into target system.
+
+-------------------------------------------------
+
+Q5. Why is pandas used?
+
+Answer:
+Pandas is used for data manipulation and analysis.
+
+-------------------------------------------------
+
+Q6. Why is matplotlib used?
+
+Answer:
+Matplotlib is used for creating charts and graphs.
+
+-------------------------------------------------
+
+Q7. Why are missing values handled?
+
+Answer:
+Missing values may affect calculations and visualization accuracy.
+
+-------------------------------------------------
+
+Q8. What is DataFrame?
+
+Answer:
+A DataFrame is a table-like structure in pandas used for storing and processing data.
+
+-------------------------------------------------
+
+Q9. Why is groupby() used?
+
+Answer:
+groupby() is used to group similar records for aggregation and analysis.
+
+-------------------------------------------------
+
+Q10. Difference between Bar Chart and Pie Chart?
+
+Answer:
+
+Bar Chart:
+Used for comparison.
+
+Pie Chart:
+Used for percentage distribution.
+
+-------------------------------------------------
+
+Q11. What is Profit Margin?
+
+Answer:
+Profit Margin represents the ratio of profit to sales.
+
+Formula:
+Profit / Sales
+
+-------------------------------------------------
+
+Q12. Why convert columns to uppercase?
+
+Answer:
+To maintain consistency and avoid case-sensitive errors.
+
+--------------------------------------------------------------------
+11. ADVANTAGES OF ETL
+--------------------------------------------------------------------
+
+1. Improves data quality
+2. Removes inconsistencies
+3. Supports business intelligence
+4. Enables data integration
+5. Improves reporting accuracy
+
+--------------------------------------------------------------------
+12. APPLICATIONS OF ETL
+--------------------------------------------------------------------
+
+1. Data Warehousing
+2. Business Intelligence
+3. Banking Systems
+4. Sales Analysis
+5. Healthcare Analytics
+6. Marketing Analysis
+
+--------------------------------------------------------------------
+13. OUTPUTS OBTAINED
+--------------------------------------------------------------------
+
+1. Loaded Dataset
+2. Cleaned Dataset
+3. Processed CSV File
+4. Bar Chart
+5. Line Chart
+6. Pie Chart
+
+--------------------------------------------------------------------
+14. CONCLUSION
+--------------------------------------------------------------------
+
+Thus, ETL process was successfully implemented using Python. Data was extracted, transformed, and loaded properly, and meaningful visualizations were created for analysis.
