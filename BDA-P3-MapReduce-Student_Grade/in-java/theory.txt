@@ -1,0 +1,715 @@
+========================================================
+PRACTICAL NO : 3
+TITLE : Hadoop MapReduce Program to Find Student Grades
+========================================================
+
+AIM:
+To develop a Hadoop MapReduce program to calculate grades of students based on their marks.
+
+========================================================
+OBJECTIVES
+========================================================
+
+1. To understand Hadoop MapReduce architecture.
+2. To understand Mapper and Reducer concepts.
+3. To learn distributed processing using Hadoop.
+4. To calculate student grades using Hadoop MapReduce.
+5. To understand HDFS input and output operations.
+
+========================================================
+SOFTWARE REQUIREMENTS
+========================================================
+
+1. Ubuntu Linux
+2. Java JDK
+3. Hadoop
+4. Terminal
+5. Text Editor / VS Code
+
+========================================================
+THEORY
+========================================================
+
+Hadoop is an open-source framework used for distributed storage and processing of large datasets.
+
+MapReduce is a programming model used for parallel processing of data across multiple systems.
+
+The MapReduce model mainly contains:
+
+1. Mapper Phase
+2. Shuffle and Sort Phase
+3. Reducer Phase
+
+In this practical, student marks are processed using Hadoop MapReduce to calculate grades.
+
+--------------------------------------------------------
+1. Mapper Phase
+--------------------------------------------------------
+
+Mapper reads student data line by line.
+
+Input Format:
+
+studentName,marks
+
+Example:
+
+student1,95
+
+Mapper Output:
+
+(student1,95)
+
+--------------------------------------------------------
+2. Shuffle and Sort Phase
+--------------------------------------------------------
+
+Hadoop automatically groups similar keys together before sending them to Reducer.
+
+--------------------------------------------------------
+3. Reducer Phase
+--------------------------------------------------------
+
+Reducer calculates average marks and assigns grades.
+
+Grade Criteria:
+
+90 and above  -> A
+80 to 89      -> B
+70 to 79      -> C
+60 to 69      -> D
+Below 60      -> F
+
+========================================================
+PRACTICAL EXPLANATION
+========================================================
+
+In this practical, Hadoop MapReduce is used to process student marks stored inside HDFS.
+
+The Mapper class reads each student record and emits key-value pairs.
+
+The Reducer class calculates average marks and assigns grades based on predefined criteria.
+
+The final output containing student names, averages, and grades is stored inside HDFS output directory.
+
+========================================================
+SOURCE CODE
+========================================================
+
+--------------------------------------------------------
+1. GradeMapper.java
+--------------------------------------------------------
+
+import java.io.IOException;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+
+import org.apache.hadoop.mapred.MapReduceBase;
+import org.apache.hadoop.mapred.Mapper;
+import org.apache.hadoop.mapred.OutputCollector;
+import org.apache.hadoop.mapred.Reporter;
+
+public class GradeMapper extends MapReduceBase
+implements Mapper<LongWritable, Text,
+                  Text, IntWritable> {
+
+    public void map(LongWritable key,
+                    Text value,
+                    OutputCollector<Text, IntWritable> output,
+                    Reporter reporter) throws IOException {
+
+        String line = value.toString();
+
+        String fields[] = line.split(",");
+
+        String studentName = fields[0];
+
+        int marks = Integer.parseInt(fields[1]);
+
+        output.collect(
+        new Text(studentName),
+        new IntWritable(marks));
+    }
+}
+
+--------------------------------------------------------
+2. GradeReducer.java
+--------------------------------------------------------
+
+import java.io.IOException;
+import java.util.Iterator;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+
+import org.apache.hadoop.mapred.MapReduceBase;
+import org.apache.hadoop.mapred.OutputCollector;
+import org.apache.hadoop.mapred.Reducer;
+import org.apache.hadoop.mapred.Reporter;
+
+public class GradeReducer extends MapReduceBase
+implements Reducer<Text, IntWritable,
+                   Text, Text> {
+
+    public void reduce(Text key,
+                       Iterator<IntWritable> values,
+                       OutputCollector<Text, Text> output,
+                       Reporter reporter) throws IOException {
+
+        int total = 0;
+        int count = 0;
+
+        while(values.hasNext()) {
+
+            total += values.next().get();
+
+            count++;
+        }
+
+        int average = total / count;
+
+        String grade;
+
+        if(average >= 90) {
+            grade = "A";
+        }
+        else if(average >= 80) {
+            grade = "B";
+        }
+        else if(average >= 70) {
+            grade = "C";
+        }
+        else if(average >= 60) {
+            grade = "D";
+        }
+        else {
+            grade = "F";
+        }
+
+        output.collect(
+        key,
+        new Text("Average = "
+        + average +
+        " Grade = " + grade));
+    }
+}
+
+--------------------------------------------------------
+3. GradeDriver.java
+--------------------------------------------------------
+
+import java.io.IOException;
+
+import org.apache.hadoop.conf.Configured;
+import org.apache.hadoop.fs.Path;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+
+import org.apache.hadoop.mapred.FileInputFormat;
+import org.apache.hadoop.mapred.FileOutputFormat;
+
+import org.apache.hadoop.mapred.JobClient;
+import org.apache.hadoop.mapred.JobConf;
+
+import org.apache.hadoop.util.Tool;
+import org.apache.hadoop.util.ToolRunner;
+
+public class GradeDriver extends Configured
+implements Tool {
+
+    public int run(String args[])
+    throws IOException {
+
+        if(args.length < 2) {
+
+            System.out.println(
+            "Please provide input and output path");
+
+            return -1;
+        }
+
+        JobConf conf =
+        new JobConf(GradeDriver.class);
+
+        FileInputFormat.setInputPaths(
+        conf,
+        new Path(args[0]));
+
+        FileOutputFormat.setOutputPath(
+        conf,
+        new Path(args[1]));
+
+        conf.setMapperClass(
+        GradeMapper.class);
+
+        conf.setReducerClass(
+        GradeReducer.class);
+
+        conf.setMapOutputKeyClass(
+        Text.class);
+
+        conf.setMapOutputValueClass(
+        IntWritable.class);
+
+        conf.setOutputKeyClass(
+        Text.class);
+
+        conf.setOutputValueClass(
+        Text.class);
+
+        JobClient.runJob(conf);
+
+        return 0;
+    }
+
+    public static void main(String args[])
+    throws Exception {
+
+        int exitCode =
+        ToolRunner.run(
+        new GradeDriver(),
+        args);
+
+        System.out.println(exitCode);
+    }
+}
+
+========================================================
+INPUT FILE
+========================================================
+
+File Name : input.txt
+
+student1,95
+student2,82
+student3,76
+student4,67
+student5,45
+student6,26
+student7,52
+student8,49
+student9,70
+
+========================================================
+STEP BY STEP EXECUTION
+========================================================
+
+--------------------------------------------------------
+STEP 1 : Create Project Folder
+--------------------------------------------------------
+
+Commands:
+
+mkdir StudentGrades
+cd StudentGrades
+
+Reason:
+Creates separate directories for the Hadoop Student Grade practical.
+
+--------------------------------------------------------
+STEP 2 : Create Java Files
+--------------------------------------------------------
+
+Commands:
+
+touch GradeMapper.java
+touch GradeReducer.java
+touch GradeDriver.java
+touch input.txt
+
+Reason:
+Creates Mapper, Reducer, Driver, and input files.
+
+--------------------------------------------------------
+STEP 3 : Create Classes Folder
+--------------------------------------------------------
+
+Command:
+
+mkdir classes
+
+Reason:
+Used to store compiled Java class files.
+
+--------------------------------------------------------
+STEP 4 : Start Hadoop
+--------------------------------------------------------
+
+Command:
+
+start-all.sh
+
+Reason:
+Starts Hadoop services such as NameNode, DataNode, ResourceManager, and NodeManager.
+
+--------------------------------------------------------
+STEP 5 : Verify Hadoop Services
+--------------------------------------------------------
+
+In New terminal (Keep the Start Hadoop running on another terminal)
+
+Command:
+
+jps
+
+Expected Output:
+
+NameNode
+DataNode
+SecondaryNameNode
+ResourceManager
+NodeManager
+
+Reason:
+Checks whether Hadoop services are running properly.
+
+--------------------------------------------------------
+STEP 6 : Compile Java Files
+--------------------------------------------------------
+
+Command:
+
+javac -classpath `hadoop classpath` -d classes *.java
+
+Reason:
+Compiles Java source files and generates .class files.
+
+--------------------------------------------------------
+STEP 7 : Create JAR File
+--------------------------------------------------------
+
+Command:
+
+jar -cvf grades.jar -C classes/ .
+
+Reason:
+Packages compiled Java class files into executable Hadoop JAR file.
+
+--------------------------------------------------------
+STEP 8 : Remove Old Input Directory
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -rm -r /grades_input
+
+Reason:
+Deletes old input directory from HDFS to avoid duplicate file errors.
+
+--------------------------------------------------------
+STEP 9 : Remove Old Output Directory
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -rm -r /grades_output
+
+Reason:
+Hadoop does not overwrite existing output directories.
+
+--------------------------------------------------------
+STEP 10 : Create Input Directory
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -mkdir /grades_input
+
+Reason:
+Creates new HDFS input directory.
+
+--------------------------------------------------------
+STEP 11 : Upload Input File
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -put input.txt /grades_input
+
+Reason:
+Uploads local input file into HDFS.
+
+--------------------------------------------------------
+STEP 12 : Verify Uploaded File
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -ls /grades_input
+
+Reason:
+Checks whether input file was uploaded successfully.
+
+--------------------------------------------------------
+STEP 13 : Run Hadoop MapReduce Program
+--------------------------------------------------------
+
+Command:
+
+hadoop jar grades.jar GradeDriver /grades_input /grades_output
+
+Reason:
+Executes Hadoop MapReduce Student Grade program.
+
+--------------------------------------------------------
+STEP 14 : Verify Output Directory
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -ls /grades_output
+
+Reason:
+Checks whether Hadoop generated output successfully.
+
+--------------------------------------------------------
+STEP 15 : Display Output
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -cat /grades_output/part-00000
+
+Reason:
+Displays final output generated by Reducer.
+
+========================================================
+EXPECTED OUTPUT
+========================================================
+
+student1    Average = 95 Grade = A
+student2    Average = 82 Grade = B
+student3    Average = 76 Grade = C
+student4    Average = 67 Grade = D
+student5    Average = 45 Grade = F
+student6    Average = 26 Grade = F
+student7    Average = 52 Grade = F
+student8    Average = 49 Grade = F
+student9    Average = 70 Grade = C
+
+========================================================
+CODE EXPLANATION
+========================================================
+
+--------------------------------------------------------
+1. Mapper Class Explanation
+--------------------------------------------------------
+
+The Mapper reads student data line by line.
+
+Each line is split using comma separator.
+
+Mapper emits:
+
+(studentName,marks)
+
+Example:
+
+(student1,95)
+
+--------------------------------------------------------
+2. Reducer Class Explanation
+--------------------------------------------------------
+
+Reducer receives grouped student marks.
+
+It calculates:
+1. Total marks
+2. Average marks
+3. Student grade
+
+Finally it outputs:
+
+studentName -> Average and Grade
+
+--------------------------------------------------------
+3. Driver Class Explanation
+--------------------------------------------------------
+
+Driver class configures and executes Hadoop MapReduce job.
+
+It performs:
+1. Input path setup
+2. Output path setup
+3. Mapper configuration
+4. Reducer configuration
+5. Job execution
+
+========================================================
+ADVANTAGES OF HADOOP MAPREDUCE
+========================================================
+
+1. Efficient processing of large datasets.
+2. Parallel data processing.
+3. Distributed computation support.
+4. Scalable architecture.
+5. Fault tolerant system.
+
+========================================================
+LIMITATIONS
+========================================================
+
+1. Complex configuration.
+2. Slower compared to Apache Spark.
+3. High disk I/O operations.
+4. Difficult debugging process.
+
+========================================================
+VIVA QUESTIONS WITH ANSWERS
+========================================================
+
+1. What is Hadoop?
+
+Answer:
+Hadoop is an open-source framework used for distributed storage and processing of big data.
+
+--------------------------------------------------------
+
+2. What is HDFS?
+
+Answer:
+HDFS stands for Hadoop Distributed File System used for storing large files across multiple machines.
+
+--------------------------------------------------------
+
+3. What is MapReduce?
+
+Answer:
+MapReduce is a programming model used for processing large datasets using Mapper and Reducer phases.
+
+--------------------------------------------------------
+
+4. What is Mapper?
+
+Answer:
+Mapper processes input data and generates intermediate key-value pairs.
+
+--------------------------------------------------------
+
+5. What is Reducer?
+
+Answer:
+Reducer processes grouped data and generates final output.
+
+--------------------------------------------------------
+
+6. What is Shuffle and Sort phase?
+
+Answer:
+Shuffle and Sort phase groups similar keys before Reducer execution.
+
+--------------------------------------------------------
+
+7. What is the purpose of this practical?
+
+Answer:
+To calculate student grades using Hadoop MapReduce.
+
+--------------------------------------------------------
+
+8. Why do we create a JAR file?
+
+Answer:
+A JAR file packages compiled Java class files for Hadoop execution.
+
+--------------------------------------------------------
+
+9. Why do we delete old output folders?
+
+Answer:
+Hadoop does not allow overwriting existing output directories.
+
+--------------------------------------------------------
+
+10. What is the role of Driver class?
+
+Answer:
+Driver class configures and starts Hadoop MapReduce job.
+
+--------------------------------------------------------
+
+11. What is the input format in this practical?
+
+Answer:
+Input format is:
+
+studentName,marks
+
+--------------------------------------------------------
+
+12. What is the output of Mapper?
+
+Answer:
+Mapper output:
+
+(studentName,marks)
+
+--------------------------------------------------------
+
+13. What is the output of Reducer?
+
+Answer:
+Reducer output contains student average and grade.
+
+--------------------------------------------------------
+
+14. What grading criteria is used?
+
+Answer:
+
+90 and above -> A
+80 to 89     -> B
+70 to 79     -> C
+60 to 69     -> D
+Below 60     -> F
+
+--------------------------------------------------------
+
+15. What is distributed computing?
+
+Answer:
+Distributed computing means processing data across multiple systems simultaneously.
+
+--------------------------------------------------------
+
+16. What is fault tolerance?
+
+Answer:
+Fault tolerance is the ability of a system to continue working even after failures.
+
+--------------------------------------------------------
+
+17. Why is Hadoop used for Big Data?
+
+Answer:
+Hadoop supports distributed storage, scalability, and parallel processing.
+
+--------------------------------------------------------
+
+18. What is NameNode?
+
+Answer:
+NameNode manages metadata and filesystem information in Hadoop.
+
+--------------------------------------------------------
+
+19. What is DataNode?
+
+Answer:
+DataNode stores actual data blocks in HDFS.
+
+--------------------------------------------------------
+
+20. What is scalability in Hadoop?
+
+Answer:
+Scalability means additional nodes can be added easily to increase storage and processing power.
+
+========================================================
+CONCLUSION
+========================================================
+
+Thus, we successfully implemented a Hadoop MapReduce program using Java to calculate grades of students based on their marks stored inside HDFS.

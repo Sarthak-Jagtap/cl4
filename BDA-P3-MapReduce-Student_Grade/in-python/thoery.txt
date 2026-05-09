@@ -1,0 +1,577 @@
+========================================================
+PRACTICAL NO : 3
+TITLE : Hadoop Streaming Program to Find Student Grades using Python
+========================================================
+
+AIM:
+To develop a Hadoop Streaming MapReduce program using Python to calculate grades of students based on their marks.
+
+========================================================
+OBJECTIVES
+========================================================
+
+1. To understand Hadoop Streaming architecture.
+2. To understand Mapper and Reducer concepts using Python.
+3. To learn distributed data processing using Hadoop Streaming.
+4. To calculate student grades using Python and Hadoop.
+5. To understand HDFS input and output operations.
+
+========================================================
+SOFTWARE REQUIREMENTS
+========================================================
+
+1. Ubuntu Linux
+2. Python3
+3. Hadoop
+4. Terminal
+5. Text Editor / VS Code
+
+========================================================
+THEORY
+========================================================
+
+Hadoop Streaming is a utility provided by Hadoop that allows MapReduce jobs to be written using scripting languages such as Python, Perl, and Shell Script.
+
+In Hadoop Streaming:
+
+1. Mapper receives input from standard input.
+2. Reducer receives sorted Mapper output.
+3. Communication happens through standard output.
+
+Python scripts act as Mapper and Reducer programs.
+
+Hadoop internally handles:
+1. Data splitting
+2. Shuffle and Sort phase
+3. Grouping of keys
+4. Reducer execution
+
+--------------------------------------------------------
+1. Mapper Phase
+--------------------------------------------------------
+
+Mapper reads student data line by line and emits key-value pairs.
+
+Input Format:
+
+studentName,marks
+
+Example:
+
+student1,95
+
+Mapper Output:
+
+(student1,95)
+
+--------------------------------------------------------
+2. Shuffle and Sort Phase
+--------------------------------------------------------
+
+Hadoop automatically groups similar student names together before sending them to Reducer.
+
+--------------------------------------------------------
+3. Reducer Phase
+--------------------------------------------------------
+
+Reducer processes student marks and assigns grades.
+
+Grade Criteria:
+
+90 and above  -> A
+80 to 89      -> B
+70 to 79      -> C
+60 to 69      -> D
+Below 60      -> F
+
+========================================================
+PRACTICAL EXPLANATION
+========================================================
+
+In this practical, Hadoop Streaming is used with Python scripts.
+
+The mapper.py script acts as Mapper and generates key-value pairs from student data.
+
+The reducer.py script acts as Reducer and assigns grades based on marks.
+
+The input file is stored inside HDFS.
+
+Hadoop Streaming executes the Python scripts and stores final output in HDFS output directory.
+
+========================================================
+SOURCE CODE
+========================================================
+
+--------------------------------------------------------
+1. mapper.py
+--------------------------------------------------------
+
+#!/usr/bin/python3
+
+import sys
+
+for line in sys.stdin:
+
+    line = line.strip()
+
+    fields = line.split(",")
+
+    student = fields[0]
+
+    marks = fields[1]
+
+    print(f"{student}\t{marks}")
+
+--------------------------------------------------------
+2. reducer.py
+--------------------------------------------------------
+
+#!/usr/bin/python3
+
+import sys
+
+for line in sys.stdin:
+
+    line = line.strip()
+
+    student, marks = line.split("\t")
+
+    marks = int(marks)
+
+    if marks >= 90:
+        grade = "A"
+
+    elif marks >= 80:
+        grade = "B"
+
+    elif marks >= 70:
+        grade = "C"
+
+    elif marks >= 60:
+        grade = "D"
+
+    else:
+        grade = "F"
+
+    print(f"{student}\tAverage = {marks} Grade = {grade}")
+
+========================================================
+INPUT FILE
+========================================================
+
+File Name : input.txt
+
+student1,95
+student2,82
+student3,76
+student4,67
+student5,45
+student6,26
+student7,52
+student8,49
+student9,70
+
+========================================================
+STEP BY STEP EXECUTION
+========================================================
+
+--------------------------------------------------------
+STEP 1 : Create Project Folder
+--------------------------------------------------------
+
+Commands:
+
+mkdir BDA-P3-MapReduce-Student_Grade
+cd BDA-P3-MapReduce-Student_Grade
+
+mkdir in-python
+cd in-python
+
+mkdir StudentGradesPython
+cd StudentGradesPython
+
+Reason:
+Creates separate directories for the Hadoop Streaming Student Grade practical.
+
+--------------------------------------------------------
+STEP 2 : Create Python Files
+--------------------------------------------------------
+
+Commands:
+
+touch mapper.py
+touch reducer.py
+touch input.txt
+
+Reason:
+Creates Mapper, Reducer, and input files.
+
+--------------------------------------------------------
+STEP 3 : Start Hadoop
+--------------------------------------------------------
+
+Command:
+
+start-all.sh
+
+Reason:
+Starts Hadoop services such as NameNode, DataNode, ResourceManager, and NodeManager.
+
+--------------------------------------------------------
+STEP 4 : Verify Hadoop Services
+--------------------------------------------------------
+
+In New terminal (Keep the Start Hadoop running on another terminal)
+
+Command:
+
+jps
+
+Expected Output:
+
+NameNode
+DataNode
+SecondaryNameNode
+ResourceManager
+NodeManager
+
+Reason:
+Checks whether Hadoop services are running properly.
+
+--------------------------------------------------------
+STEP 5 : Give Execute Permission
+--------------------------------------------------------
+
+Command:
+
+chmod +x mapper.py reducer.py
+
+Reason:
+Provides executable permission to Python scripts so Hadoop Streaming can execute them.
+
+--------------------------------------------------------
+STEP 6 : Remove Old Input Directory
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -rm -r /grades_input
+
+Reason:
+Deletes old input directory from HDFS to avoid duplicate file errors.
+
+--------------------------------------------------------
+STEP 7 : Remove Old Output Directory
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -rm -r /grades_output
+
+Reason:
+Hadoop does not allow overwriting existing output directories.
+
+--------------------------------------------------------
+STEP 8 : Create Input Directory
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -mkdir /grades_input
+
+Reason:
+Creates new HDFS input directory.
+
+--------------------------------------------------------
+STEP 9 : Upload Input File
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -put input.txt /grades_input
+
+Reason:
+Uploads local input file into HDFS.
+
+--------------------------------------------------------
+STEP 10 : Verify Uploaded File
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -ls /grades_input
+
+Reason:
+Checks whether input file was uploaded successfully.
+
+--------------------------------------------------------
+STEP 11 : Run Hadoop Streaming Program
+--------------------------------------------------------
+
+Command:
+
+hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-*.jar \
+-input /grades_input/input.txt \
+-output /grades_output \
+-mapper mapper.py \
+-reducer reducer.py
+
+Reason:
+Executes Hadoop Streaming Student Grade program using Python scripts.
+
+--------------------------------------------------------
+STEP 12 : Verify Output Directory
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -ls /grades_output
+
+Reason:
+Checks whether Hadoop generated output successfully.
+
+--------------------------------------------------------
+STEP 13 : Display Output
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -cat /grades_output/part-00000
+
+Reason:
+Displays final output generated by Reducer.
+
+========================================================
+EXPECTED OUTPUT
+========================================================
+
+student1    Average = 95 Grade = A
+student2    Average = 82 Grade = B
+student3    Average = 76 Grade = C
+student4    Average = 67 Grade = D
+student5    Average = 45 Grade = F
+student6    Average = 26 Grade = F
+student7    Average = 52 Grade = F
+student8    Average = 49 Grade = F
+student9    Average = 70 Grade = C
+
+========================================================
+CODE EXPLANATION
+========================================================
+
+--------------------------------------------------------
+1. Mapper Script Explanation
+--------------------------------------------------------
+
+The mapper.py script reads student data from standard input.
+
+Each line is split using comma separator.
+
+Mapper emits:
+
+(studentName,marks)
+
+Example:
+
+(student1,95)
+
+--------------------------------------------------------
+2. Reducer Script Explanation
+--------------------------------------------------------
+
+Reducer receives Mapper output from Hadoop.
+
+It converts marks into integer values.
+
+Grades are assigned according to predefined criteria.
+
+Finally it outputs:
+
+studentName -> Average and Grade
+
+--------------------------------------------------------
+3. Hadoop Streaming Explanation
+--------------------------------------------------------
+
+Hadoop Streaming allows non-Java languages such as Python to work with Hadoop MapReduce.
+
+Mapper and Reducer communicate through standard input and output.
+
+========================================================
+ADVANTAGES OF HADOOP STREAMING
+========================================================
+
+1. Easy implementation using Python.
+2. No Java compilation required.
+3. Supports multiple scripting languages.
+4. Faster development process.
+5. Easier debugging.
+
+========================================================
+LIMITATIONS
+========================================================
+
+1. Slightly slower than Java MapReduce.
+2. Requires Python interpreter.
+3. Less optimized compared to Java implementation.
+
+========================================================
+VIVA QUESTIONS WITH ANSWERS
+========================================================
+
+1. What is Hadoop Streaming?
+
+Answer:
+Hadoop Streaming is a utility that allows MapReduce jobs to be written using scripting languages such as Python.
+
+--------------------------------------------------------
+
+2. Can Hadoop work with Python?
+
+Answer:
+Yes. Hadoop supports Python using Hadoop Streaming.
+
+--------------------------------------------------------
+
+3. What is the role of mapper.py?
+
+Answer:
+mapper.py acts as Mapper and generates intermediate key-value pairs.
+
+--------------------------------------------------------
+
+4. What is the role of reducer.py?
+
+Answer:
+reducer.py acts as Reducer and generates final output.
+
+--------------------------------------------------------
+
+5. Why do we use chmod +x?
+
+Answer:
+It provides executable permission to Python scripts.
+
+--------------------------------------------------------
+
+6. What is Hadoop?
+
+Answer:
+Hadoop is an open-source framework used for distributed storage and processing of big data.
+
+--------------------------------------------------------
+
+7. What is HDFS?
+
+Answer:
+HDFS stands for Hadoop Distributed File System.
+
+--------------------------------------------------------
+
+8. What is MapReduce?
+
+Answer:
+MapReduce is a programming model used for processing large datasets in parallel.
+
+--------------------------------------------------------
+
+9. What are the phases of MapReduce?
+
+Answer:
+1. Mapper Phase
+2. Shuffle and Sort Phase
+3. Reducer Phase
+
+--------------------------------------------------------
+
+10. Why do we delete old output folders?
+
+Answer:
+Hadoop does not allow overwriting existing output directories.
+
+--------------------------------------------------------
+
+11. What is the input format in this practical?
+
+Answer:
+Input format is:
+
+studentName,marks
+
+--------------------------------------------------------
+
+12. What is Mapper output?
+
+Answer:
+Mapper output contains intermediate key-value pairs.
+
+Example:
+
+(student1,95)
+
+--------------------------------------------------------
+
+13. What is Reducer output?
+
+Answer:
+Reducer output contains final student grades.
+
+--------------------------------------------------------
+
+14. What grading criteria is used?
+
+Answer:
+
+90 and above -> A
+80 to 89     -> B
+70 to 79     -> C
+60 to 69     -> D
+Below 60     -> F
+
+--------------------------------------------------------
+
+15. What is distributed computing?
+
+Answer:
+Distributed computing means processing data across multiple systems simultaneously.
+
+--------------------------------------------------------
+
+16. What is fault tolerance?
+
+Answer:
+Fault tolerance is the ability of a system to continue working even after failures.
+
+--------------------------------------------------------
+
+17. Why is Hadoop used for Big Data?
+
+Answer:
+Hadoop supports distributed storage, scalability, and parallel processing.
+
+--------------------------------------------------------
+
+18. What is NameNode?
+
+Answer:
+NameNode manages metadata and filesystem information in Hadoop.
+
+--------------------------------------------------------
+
+19. What is DataNode?
+
+Answer:
+DataNode stores actual data blocks in HDFS.
+
+--------------------------------------------------------
+
+20. What is the advantage of Python in Hadoop?
+
+Answer:
+Python provides simpler syntax and easier implementation compared to Java.
+
+========================================================
+CONCLUSION
+========================================================
+
+Thus, we successfully implemented a Hadoop Streaming MapReduce program using Python to calculate grades of students based on their marks stored inside HDFS.

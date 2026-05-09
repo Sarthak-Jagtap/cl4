@@ -1,0 +1,9 @@
+student1,95
+student2,82
+student3,76
+student4,67
+student5,45
+student6,26
+student7,52
+student8,49
+student9,70
