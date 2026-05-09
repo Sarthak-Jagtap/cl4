@@ -1,0 +1,503 @@
+ASSIGNMENT NO: 1
+TITLE: Import Data from Different Sources such as Excel, CSV, OData Feed and Load into Target System
+
+--------------------------------------------------------------------
+1. AIM
+--------------------------------------------------------------------
+
+To import data from different sources such as Excel, CSV, and OData Feed into Power BI Desktop and load the data into the target system for analysis and visualization.
+
+--------------------------------------------------------------------
+3. THEORY
+--------------------------------------------------------------------
+
+Business organizations store data in different formats and systems such as Excel files, CSV files, SQL databases, APIs, and cloud platforms. Before analysis can be performed, this data must be imported into a centralized system.
+
+Power BI provides the ability to connect to multiple data sources and load them into a single environment for analysis and reporting.
+
+This process generally includes:
+
+1. Data Extraction
+   Retrieving data from various sources.
+
+2. Data Transformation
+   Cleaning and modifying data.
+
+3. Data Loading
+   Loading processed data into Power BI model.
+
+The imported data can then be visualized using charts, graphs, dashboards, and reports.
+
+--------------------------------------------------------------------
+4. EXPLANATION OF PRACTICAL
+--------------------------------------------------------------------
+
+In this practical, data is imported from multiple sources into Power BI Desktop.
+
+The following sources are used:
+1. Excel File
+2. CSV File
+3. OData Feed
+
+After importing the data:
+- The data is transformed using Query Editor.
+- Unnecessary columns are removed.
+- Data types are modified.
+- Data is loaded into Power BI.
+- Visualizations are created for analysis.
+
+This practical demonstrates how Power BI can integrate heterogeneous data sources into a unified reporting system.
+
+
+***********************************************************************
+--------------------------------------------------------------------
+5. STEPS TO EXECUTE PRACTICAL
+--------------------------------------------------------------------
+***********************************************************************
+
+=================================================
+A) IMPORTING EXCEL DATA INTO POWER BI
+=================================================
+
+Step 1:
+Open Power BI Desktop.
+
+Step 2:
+Click on:
+Home → Get Data
+
+Step 3:
+Select:
+Excel Workbook
+
+Step 4:
+Click Connect.
+
+Step 5:
+Browse and select:
+products.xlsx
+
+Step 6:
+Click Open.
+
+Step 7:
+Navigator window appears.
+
+Step 8:
+Select the required sheet/table.
+
+Step 9:
+Click:
+Transform Data
+
+Step 10:
+Power Query Editor opens.
+
+Step 11:
+Verify imported columns and data.
+
+Step 12:
+Click:
+Close & Apply
+
+Step 13:
+Data is loaded into Power BI model.
+
+-------------------------------------------------
+
+OUTPUT:
+- Navigator Window
+- Imported Excel Table
+- Query Editor
+- Loaded Data
+
+=================================================
+B) IMPORTING CSV DATA INTO POWER BI
+=================================================
+
+Step 1:
+Click:
+Home → Get Data
+
+Step 2:
+Select:
+Text/CSV
+
+Step 3:
+Click Connect.
+
+Step 4:
+Select:
+customers.csv
+
+Step 5:
+Preview window appears.
+
+Step 6:
+Verify delimiter and columns.
+
+Step 7:
+Click:
+Load
+
+Step 8:
+Data gets loaded into Power BI.
+
+-------------------------------------------------
+
+OUTPUT:
+- CSV Preview Window
+- Loaded CSV Dataset
+
+=================================================
+C) IMPORTING ODATA FEED
+=================================================
+
+Step 1:
+Click:
+Home → Get Data
+
+Step 2:
+Select:
+OData Feed
+
+Step 3:
+Paste the URL:
+
+http://services.odata.org/V3/Northwind/Northwind.svc/
+
+Step 4:
+Click OK.
+
+Step 5:
+Navigator window opens.
+
+Step 6:
+Select:
+Orders Table
+
+Step 7:
+Click:
+Transform Data
+
+Step 8:
+Query Editor opens.
+
+Step 9:
+Verify columns and records.
+
+Step 10:
+Click:
+Close & Apply
+
+-------------------------------------------------
+
+OUTPUT:
+- OData Connection Window
+- Orders Table
+- Query Editor
+
+=================================================
+D) DATA TRANSFORMATION USING QUERY EDITOR
+=================================================
+
+Step 1:
+Select unnecessary columns.
+
+Step 2:
+Right Click →
+Remove Columns
+
+Step 3:
+Rename columns.
+
+Step 4:
+Change data types.
+
+Step 5:
+Filter unwanted values.
+
+Step 6:
+Click:
+Close & Apply
+
+-------------------------------------------------
+
+OUTPUT:
+- Transformed Dataset
+- Cleaned Data
+
+=================================================
+E) DATA VISUALIZATION
+=================================================
+
+Step 1:
+Go to Report View.
+
+Step 2:
+Select:
+Bar Chart
+
+Step 3:
+Drag fields:
+- ProductName → Axis
+- UnitsInStock → Values
+
+Step 4:
+Adjust chart size and formatting.
+
+-------------------------------------------------
+
+OUTPUT:
+- Bar Chart Visualization
+
+--------------------------------------------------------------------
+6. EXPLANATION OF EACH IMPORTANT STEP
+--------------------------------------------------------------------
+
+-------------------------------------------------
+1. Get Data
+-------------------------------------------------
+
+Purpose:
+Used to connect Power BI with external data sources.
+
+Reason:
+Without importing data, analysis cannot be performed.
+
+-------------------------------------------------
+2. Transform Data
+-------------------------------------------------
+
+Purpose:
+Opens Power Query Editor.
+
+Reason:
+Allows cleaning and preprocessing before loading data.
+
+-------------------------------------------------
+3. Remove Columns
+-------------------------------------------------
+
+Purpose:
+Deletes unnecessary columns.
+
+Reason:
+Reduces memory usage and improves report clarity.
+
+-------------------------------------------------
+4. Change Data Types
+-------------------------------------------------
+
+Purpose:
+Ensures columns contain correct data format.
+
+Example:
+- Date column → Date Type
+- Quantity → Integer
+
+Reason:
+Wrong data types can produce incorrect calculations.
+
+-------------------------------------------------
+5. Close & Apply
+-------------------------------------------------
+
+Purpose:
+Loads transformed data into Power BI.
+
+Reason:
+Finalizes ETL process.
+
+-------------------------------------------------
+6. Visualization
+-------------------------------------------------
+
+Purpose:
+Represents data graphically.
+
+Reason:
+Helps identify trends and patterns.
+
+--------------------------------------------------------------------
+7. ETL PROCESS THEORY
+--------------------------------------------------------------------
+
+=================================================
+1. EXTRACT
+=================================================
+
+Definition:
+Process of retrieving data from sources.
+
+Examples:
+- Excel
+- CSV
+- Database
+- API
+- OData Feed
+
+Purpose:
+Collect raw data.
+
+=================================================
+2. TRANSFORM
+=================================================
+
+Definition:
+Process of cleaning and modifying data.
+
+Operations:
+- Removing duplicates
+- Filtering
+- Renaming columns
+- Changing data types
+- Handling null values
+
+Purpose:
+Prepare data for analysis.
+
+=================================================
+3. LOAD
+=================================================
+
+Definition:
+Process of loading processed data into target system.
+
+Purpose:
+Store transformed data for reporting and analysis.
+
+--------------------------------------------------------------------
+8. POWER BI QUERY EDITOR THEORY
+--------------------------------------------------------------------
+
+Power Query Editor is a data transformation tool in Power BI.
+
+Functions:
+1. Data Cleaning
+2. Filtering
+3. Splitting Columns
+4. Merging Queries
+5. Removing Duplicates
+6. Changing Data Types
+7. Creating Custom Columns
+
+Advantages:
+- Easy ETL process
+- No coding required
+- Fast preprocessing
+
+--------------------------------------------------------------------
+9. ADVANTAGES OF POWER BI
+--------------------------------------------------------------------
+
+1. Connects multiple data sources
+2. Interactive dashboards
+3. Easy visualization
+4. Fast data processing
+5. Cloud integration
+6. User-friendly interface
+
+--------------------------------------------------------------------
+10. APPLICATIONS OF POWER BI
+--------------------------------------------------------------------
+
+1. Business Reporting
+2. Sales Analysis
+3. Financial Analysis
+4. Healthcare Reporting
+5. Marketing Analytics
+6. Inventory Management
+
+--------------------------------------------------------------------
+11. POSSIBLE VIVA QUESTIONS WITH ANSWERS
+--------------------------------------------------------------------
+
+Q1. What is Power BI?
+
+Answer:
+Power BI is a business analytics and visualization tool developed by Microsoft. It is used to connect, transform, analyze, and visualize data from multiple sources.
+
+-------------------------------------------------
+
+Q2. What is ETL?
+
+Answer:
+ETL stands for:
+- Extract
+- Transform
+- Load
+
+It is a process used to collect, clean, and store data for analysis.
+
+-------------------------------------------------
+
+Q3. What is OData Feed?
+
+Answer:
+OData (Open Data Protocol) is a standard protocol used to access and share data over the internet.
+
+-------------------------------------------------
+
+Q4. What is Query Editor?
+
+Answer:
+Query Editor is a Power BI tool used for transforming and cleaning data before loading it into the model.
+
+-------------------------------------------------
+
+Q5. Why is data transformation important?
+
+Answer:
+Raw data may contain errors, duplicates, or unwanted columns. Transformation improves data quality and accuracy.
+
+-------------------------------------------------
+
+Q6. What is the purpose of visualization?
+
+Answer:
+Visualization helps represent data graphically so users can understand patterns, trends, and insights easily.
+
+-------------------------------------------------
+
+Q7. Difference between Excel and CSV?
+
+Answer:
+Excel:
+- Supports multiple sheets
+- Supports formatting and formulas
+
+CSV:
+- Plain text format
+- Stores comma-separated values
+
+-------------------------------------------------
+
+Q8. What is the use of Remove Other Columns?
+
+Answer:
+It keeps only selected columns and removes remaining unnecessary columns.
+
+-------------------------------------------------
+
+Q9. What happens when Close & Apply is clicked?
+
+Answer:
+Power BI applies all transformations and loads data into the model.
+
+-------------------------------------------------
+
+Q10. What are the benefits of Power BI?
+
+Answer:
+- Interactive dashboards
+- Multiple data source support
+- Fast analysis
+- Easy reporting
+- Real-time insights
+
+--------------------------------------------------------------------
+12. CONCLUSION
+--------------------------------------------------------------------
+
+Thus, data was successfully imported from different sources such as Excel, CSV, and OData Feed into Power BI Desktop. The data was transformed using Query Editor and loaded into the target system for visualization and analysis.
