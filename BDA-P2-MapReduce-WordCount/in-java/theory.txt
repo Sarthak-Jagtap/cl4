@@ -1,0 +1,738 @@
+========================================================
+PRACTICAL NO : 2
+TITLE : Hadoop MapReduce Program for Word Count
+========================================================
+
+AIM:
+To develop a Hadoop MapReduce program to calculate the frequency of words in a given input file.
+
+========================================================
+OBJECTIVES
+========================================================
+
+1. To understand Hadoop MapReduce architecture.
+2. To understand Mapper and Reducer concepts.
+3. To learn distributed data processing using Hadoop.
+4. To implement word frequency counting using Java and Hadoop.
+5. To understand HDFS input and output operations.
+
+========================================================
+SOFTWARE REQUIREMENTS
+========================================================
+
+1. Ubuntu Linux
+2. Java JDK
+3. Hadoop
+4. Terminal
+5. Text Editor / VS Code
+
+========================================================
+THEORY
+========================================================
+
+Hadoop is an open-source framework used for distributed storage and processing of large datasets across clusters of computers.
+
+Apache Hadoop mainly consists of:
+
+1. HDFS (Hadoop Distributed File System)
+2. MapReduce Processing Framework
+3. YARN Resource Management
+
+MapReduce is a programming model used for processing huge amounts of data in parallel.
+
+The MapReduce model mainly contains two phases:
+
+1. Mapper Phase
+2. Reducer Phase
+
+--------------------------------------------------------
+1. Mapper Phase
+--------------------------------------------------------
+
+The Mapper reads the input data line by line and converts it into key-value pairs.
+
+Example:
+
+Input:
+hadoop is fast
+
+Mapper Output:
+(hadoop,1)
+(is,1)
+(fast,1)
+
+--------------------------------------------------------
+2. Shuffle and Sort Phase
+--------------------------------------------------------
+
+The Hadoop framework automatically groups similar keys together.
+
+Example:
+
+(hadoop,1)
+(hadoop,1)
+(is,1)
+
+--------------------------------------------------------
+3. Reducer Phase
+--------------------------------------------------------
+
+Reducer combines all values of the same key and calculates total frequency.
+
+Example:
+
+(hadoop,2)
+(is,1)
+
+========================================================
+PRACTICAL EXPLANATION
+========================================================
+
+In this practical, a Hadoop MapReduce application is created using Java.
+
+The input text file is stored inside HDFS.
+
+The Mapper class reads the file and generates key-value pairs for every word.
+
+The Reducer class groups similar words and calculates total frequency.
+
+Finally, the output is stored inside the HDFS output directory.
+
+========================================================
+SOURCE CODE
+========================================================
+
+--------------------------------------------------------
+1. WCMapper.java
+--------------------------------------------------------
+
+import java.io.IOException;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+
+import org.apache.hadoop.mapred.MapReduceBase;
+import org.apache.hadoop.mapred.Mapper;
+import org.apache.hadoop.mapred.OutputCollector;
+import org.apache.hadoop.mapred.Reporter;
+
+public class WCMapper extends MapReduceBase
+implements Mapper<LongWritable, Text, Text, IntWritable> {
+
+    public void map(LongWritable key,
+                    Text value,
+                    OutputCollector<Text, IntWritable> output,
+                    Reporter reporter) throws IOException {
+
+        String line = value.toString();
+
+        String words[] = line.split(" ");
+
+        for(String word : words) {
+
+            if(word.length() > 0) {
+
+                output.collect(new Text(word),
+                               new IntWritable(1));
+            }
+        }
+    }
+}
+
+--------------------------------------------------------
+2. WCReducer.java
+--------------------------------------------------------
+
+import java.io.IOException;
+import java.util.Iterator;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+
+import org.apache.hadoop.mapred.MapReduceBase;
+import org.apache.hadoop.mapred.OutputCollector;
+import org.apache.hadoop.mapred.Reducer;
+import org.apache.hadoop.mapred.Reporter;
+
+public class WCReducer extends MapReduceBase
+implements Reducer<Text, IntWritable,
+                   Text, IntWritable> {
+
+    public void reduce(Text key,
+                       Iterator<IntWritable> values,
+                       OutputCollector<Text, IntWritable> output,
+                       Reporter reporter) throws IOException {
+
+        int count = 0;
+
+        while(values.hasNext()) {
+
+            count += values.next().get();
+        }
+
+        output.collect(key,
+                       new IntWritable(count));
+    }
+}
+
+--------------------------------------------------------
+3. WCDriver.java
+--------------------------------------------------------
+
+import java.io.IOException;
+
+import org.apache.hadoop.conf.Configured;
+import org.apache.hadoop.fs.Path;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+
+import org.apache.hadoop.mapred.FileInputFormat;
+import org.apache.hadoop.mapred.FileOutputFormat;
+
+import org.apache.hadoop.mapred.JobClient;
+import org.apache.hadoop.mapred.JobConf;
+
+import org.apache.hadoop.util.Tool;
+import org.apache.hadoop.util.ToolRunner;
+
+public class WCDriver extends Configured
+implements Tool {
+
+    public int run(String args[])
+    throws IOException {
+
+        if(args.length < 2) {
+
+            System.out.println(
+            "Please provide input and output path");
+
+            return -1;
+        }
+
+        JobConf conf =
+        new JobConf(WCDriver.class);
+
+        FileInputFormat.setInputPaths(
+        conf,
+        new Path(args[0]));
+
+        FileOutputFormat.setOutputPath(
+        conf,
+        new Path(args[1]));
+
+        conf.setMapperClass(
+        WCMapper.class);
+
+        conf.setReducerClass(
+        WCReducer.class);
+
+        conf.setMapOutputKeyClass(
+        Text.class);
+
+        conf.setMapOutputValueClass(
+        IntWritable.class);
+
+        conf.setOutputKeyClass(
+        Text.class);
+
+        conf.setOutputValueClass(
+        IntWritable.class);
+
+        JobClient.runJob(conf);
+
+        return 0;
+    }
+
+    public static void main(String args[])
+    throws Exception {
+
+        int exitCode =
+        ToolRunner.run(
+        new WCDriver(),
+        args);
+
+        System.out.println(exitCode);
+    }
+}
+
+========================================================
+INPUT FILE
+========================================================
+
+File Name : input.txt
+
+hadoop is big data
+hadoop is fast
+big data is powerful
+
+========================================================
+STEP BY STEP EXECUTION
+========================================================
+
+--------------------------------------------------------
+STEP 1 : Start Hadoop
+--------------------------------------------------------
+
+Command:
+
+start-all.sh
+
+Reason:
+This command starts all Hadoop services such as NameNode, DataNode, ResourceManager, and NodeManager.
+
+--------------------------------------------------------
+STEP 2 : Check Hadoop Services
+--------------------------------------------------------
+
+In New terminal (Keep the Start Hadoop running on another terminal)
+Command:
+
+jps
+
+Expected Output:
+
+NameNode
+DataNode
+SecondaryNameNode
+ResourceManager
+NodeManager
+
+Reason:
+Used to verify whether all Hadoop services are running properly.
+
+--------------------------------------------------------
+STEP 3 : Go to Project Folder
+--------------------------------------------------------
+
+Command:
+
+cd ~/Desktop/practicals/cl4/BDA-P2-MapReduce-WordCount/in-java/WordCount
+
+Reason:
+Moves terminal to the project directory where Java files are stored.
+
+--------------------------------------------------------
+STEP 4 : Create Classes Folder
+--------------------------------------------------------
+
+Command:
+
+mkdir -p classes
+
+Reason:
+Used to store compiled .class files.
+
+--------------------------------------------------------
+STEP 5 : Compile Java Files
+--------------------------------------------------------
+
+Command:
+
+javac -classpath `hadoop classpath` -d classes *.java
+
+Reason:
+Compiles all Java source files and generates class files required for execution.
+
+--------------------------------------------------------
+STEP 6 : Create JAR File
+--------------------------------------------------------
+
+Command:
+
+jar -cvf wc.jar -C classes/ .
+
+Reason:
+Packages all compiled class files into a single executable JAR file.
+
+--------------------------------------------------------
+STEP 7 : Remove Old Input Directory
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -rm -r /input
+
+Reason:
+Deletes old input directory from HDFS to avoid duplicate file errors.
+
+--------------------------------------------------------
+STEP 8 : Remove Old Output Directory
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -rm -r /output
+
+Reason:
+Hadoop does not allow overwriting existing output directories. Therefore old output folder must be deleted before execution.
+
+--------------------------------------------------------
+STEP 9 : Verify HDFS Root
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -ls /
+
+Reason:
+Displays all directories present in HDFS root.
+
+--------------------------------------------------------
+STEP 10 : Create New Input Directory
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -mkdir /input
+
+Reason:
+Creates a new input directory inside HDFS.
+
+--------------------------------------------------------
+STEP 11 : Upload Input File
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -put input.txt /input
+
+Reason:
+Uploads local input.txt file into HDFS input directory.
+
+--------------------------------------------------------
+STEP 12 : Verify Uploaded File
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -ls /input
+
+Reason:
+Checks whether input.txt file was uploaded successfully.
+
+--------------------------------------------------------
+STEP 13 : Run Hadoop MapReduce Program
+--------------------------------------------------------
+
+Command:
+
+hadoop jar wc.jar WCDriver /input /output
+
+Reason:
+Executes the Hadoop MapReduce job using the created JAR file.
+
+--------------------------------------------------------
+STEP 14 : Verify Output Directory
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -ls /output
+
+Reason:
+Checks whether Hadoop successfully created output files.
+
+--------------------------------------------------------
+STEP 15 : Display Output
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -cat /output/part-00000
+
+Reason:
+Displays the final output generated by Reducer.
+
+========================================================
+EXPECTED OUTPUT
+========================================================
+
+big      2
+data     2
+fast     1
+hadoop   2
+is       3
+powerful 1
+
+========================================================
+CODE EXPLANATION
+========================================================
+
+--------------------------------------------------------
+1. Mapper Class Explanation
+--------------------------------------------------------
+
+The Mapper class reads input line by line.
+
+Each line is split into words using split() function.
+
+Every word is emitted as:
+
+(word,1)
+
+Example:
+
+(hadoop,1)
+
+--------------------------------------------------------
+2. Reducer Class Explanation
+--------------------------------------------------------
+
+Reducer receives grouped words from Mapper.
+
+It adds all values belonging to the same word.
+
+Example:
+
+(hadoop,1)
+(hadoop,1)
+
+Output:
+(hadoop,2)
+
+--------------------------------------------------------
+3. Driver Class Explanation
+--------------------------------------------------------
+
+Driver class configures and starts the Hadoop job.
+
+It performs:
+1. Input path setup
+2. Output path setup
+3. Mapper configuration
+4. Reducer configuration
+5. Job execution
+
+========================================================
+ADVANTAGES OF HADOOP MAPREDUCE
+========================================================
+
+1. Processes large datasets efficiently.
+2. Supports parallel processing.
+3. Fault tolerant system.
+4. Distributed computing support.
+5. Scalable architecture.
+
+========================================================
+LIMITATIONS
+========================================================
+
+1. Complex setup process.
+2. Slower compared to Spark.
+3. High disk I/O operations.
+4. Difficult debugging.
+
+========================================================
+VIVA QUESTIONS
+========================================================
+
+1. What is Hadoop?
+
+Answer:
+Hadoop is an open-source framework used for distributed storage and processing of large datasets across multiple computers.
+
+--------------------------------------------------------
+
+2. What is HDFS?
+
+Answer:
+HDFS stands for Hadoop Distributed File System. It is used to store large files across multiple machines in a distributed manner.
+
+--------------------------------------------------------
+
+3. What is MapReduce?
+
+Answer:
+MapReduce is a programming model used for processing large datasets in parallel using Mapper and Reducer phases.
+
+--------------------------------------------------------
+
+4. What are the phases of MapReduce?
+
+Answer:
+The phases of MapReduce are:
+1. Mapper Phase
+2. Shuffle and Sort Phase
+3. Reducer Phase
+
+--------------------------------------------------------
+
+5. What is Mapper?
+
+Answer:
+Mapper is a component that processes input data and converts it into key-value pairs.
+
+Example:
+(hadoop,1)
+
+--------------------------------------------------------
+
+6. What is Reducer?
+
+Answer:
+Reducer combines similar keys and performs aggregation operations such as counting, summation, etc.
+
+--------------------------------------------------------
+
+7. What is Shuffle and Sort phase?
+
+Answer:
+Shuffle and Sort phase groups all similar keys together before sending them to the Reducer.
+
+--------------------------------------------------------
+
+8. Why do we use key-value pairs?
+
+Answer:
+Key-value pairs make distributed data processing easier and allow efficient grouping and aggregation.
+
+--------------------------------------------------------
+
+9. Why do we create a JAR file?
+
+Answer:
+A JAR file packages all compiled Java class files together so Hadoop can execute the MapReduce program.
+
+--------------------------------------------------------
+
+10. What is HDFS input directory?
+
+Answer:
+It is the directory inside HDFS where input files are stored before processing.
+
+--------------------------------------------------------
+
+11. Why do we delete old output folders?
+
+Answer:
+Hadoop does not allow overwriting existing output directories. Therefore old output folders must be deleted before rerunning the program.
+
+--------------------------------------------------------
+
+12. What is the use of ToolRunner?
+
+Answer:
+ToolRunner is used to run Hadoop applications and manage Hadoop configuration settings efficiently.
+
+--------------------------------------------------------
+
+13. Difference between Hadoop and Spark?
+
+Answer:
+
+Hadoop:
+1. Disk-based processing
+2. Slower execution
+3. Uses MapReduce
+
+Spark:
+1. In-memory processing
+2. Faster execution
+3. Suitable for real-time analytics
+
+--------------------------------------------------------
+
+14. What is distributed computing?
+
+Answer:
+Distributed computing means processing data across multiple computers connected through a network.
+
+--------------------------------------------------------
+
+15. What is fault tolerance?
+
+Answer:
+Fault tolerance is the ability of a system to continue working even if some components fail.
+
+--------------------------------------------------------
+
+16. What is NameNode?
+
+Answer:
+NameNode is the master node in Hadoop that manages metadata and file system information.
+
+--------------------------------------------------------
+
+17. What is DataNode?
+
+Answer:
+DataNode stores the actual data blocks in HDFS.
+
+--------------------------------------------------------
+
+18. Difference between local filesystem and HDFS?
+
+Answer:
+
+Local Filesystem:
+1. Stores data on one machine
+2. Limited storage
+3. No distributed processing
+
+HDFS:
+1. Stores data across multiple machines
+2. Large storage capability
+3. Supports distributed processing
+
+--------------------------------------------------------
+
+19. Why is Hadoop used for Big Data?
+
+Answer:
+Hadoop is used for Big Data because it supports distributed storage, parallel processing, scalability, and fault tolerance.
+
+--------------------------------------------------------
+
+20. Explain Word Count application in Hadoop.
+
+Answer:
+Word Count is a basic Hadoop MapReduce application used to count the frequency of words in an input file using Mapper and Reducer phases.
+
+--------------------------------------------------------
+
+21. What is YARN?
+
+Answer:
+YARN stands for Yet Another Resource Negotiator. It manages cluster resources and schedules jobs in Hadoop.
+
+--------------------------------------------------------
+
+22. What is the role of Driver class?
+
+Answer:
+The Driver class configures the Hadoop job, sets Mapper and Reducer classes, input-output paths, and starts execution.
+
+--------------------------------------------------------
+
+23. What is the output of Mapper?
+
+Answer:
+The output of Mapper is intermediate key-value pairs.
+
+Example:
+(data,1)
+
+--------------------------------------------------------
+
+24. What is the output of Reducer?
+
+Answer:
+The Reducer produces the final aggregated result.
+
+Example:
+(data,2)
+
+--------------------------------------------------------
+
+25. Why is Hadoop considered scalable?
+
+Answer:
+Hadoop is scalable because more nodes can be added easily to increase storage and processing capacity.
+
+========================================================
+CONCLUSION
+========================================================
+
+Thus, we successfully implemented a Hadoop MapReduce program using Java to calculate word frequency from an input text file stored in HDFS.

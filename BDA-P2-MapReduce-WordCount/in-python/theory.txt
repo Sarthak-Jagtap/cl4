@@ -1,0 +1,543 @@
+========================================================
+PRACTICAL NO : 2
+TITLE : Hadoop Streaming Word Count using Python
+========================================================
+
+AIM:
+To develop a Hadoop Streaming MapReduce program using Python to calculate the frequency of words in a given input file.
+
+========================================================
+OBJECTIVES
+========================================================
+
+1. To understand Hadoop Streaming architecture.
+2. To understand Mapper and Reducer concepts using Python.
+3. To learn distributed data processing using Hadoop Streaming.
+4. To implement word frequency counting using Python and Hadoop.
+5. To understand HDFS input and output operations.
+
+========================================================
+SOFTWARE REQUIREMENTS
+========================================================
+
+1. Ubuntu Linux
+2. Python3
+3. Hadoop
+4. Terminal
+5. Text Editor / VS Code
+
+========================================================
+THEORY
+========================================================
+
+Hadoop Streaming is a utility provided by Hadoop that allows users to create and run MapReduce jobs using any executable or scripting language such as Python, Shell Script, Perl, etc.
+
+In Hadoop Streaming:
+
+1. Mapper receives input from standard input.
+2. Reducer receives sorted Mapper output.
+3. Communication happens through standard output.
+
+Python scripts can act as Mapper and Reducer programs.
+
+Hadoop Streaming internally handles:
+1. Data splitting
+2. Shuffle and Sort phase
+3. Grouping of keys
+4. Reducer execution
+
+--------------------------------------------------------
+1. Mapper Phase
+--------------------------------------------------------
+
+Mapper reads input data line by line and emits key-value pairs.
+
+Example:
+
+Input:
+hadoop is fast
+
+Mapper Output:
+(hadoop,1)
+(is,1)
+(fast,1)
+
+--------------------------------------------------------
+2. Shuffle and Sort Phase
+--------------------------------------------------------
+
+Hadoop automatically groups similar keys together.
+
+Example:
+
+(hadoop,1)
+(hadoop,1)
+(is,1)
+
+--------------------------------------------------------
+3. Reducer Phase
+--------------------------------------------------------
+
+Reducer combines similar keys and calculates total frequency.
+
+Example:
+
+(hadoop,2)
+(is,1)
+
+========================================================
+PRACTICAL EXPLANATION
+========================================================
+
+In this practical, Hadoop Streaming is used with Python scripts.
+
+The mapper.py script acts as Mapper and generates key-value pairs.
+
+The reducer.py script acts as Reducer and calculates total word frequencies.
+
+The input file is stored inside HDFS.
+
+Hadoop Streaming executes the Python scripts and stores the final output in HDFS output directory.
+
+========================================================
+SOURCE CODE
+========================================================
+
+--------------------------------------------------------
+1. mapper.py
+--------------------------------------------------------
+
+#!/usr/bin/python3
+
+import sys
+
+for line in sys.stdin:
+
+    words = line.strip().split()
+
+    for word in words:
+
+        print(f"{word}\t1")
+
+--------------------------------------------------------
+2. reducer.py
+--------------------------------------------------------
+
+#!/usr/bin/python3
+
+import sys
+
+current_word = None
+current_count = 0
+
+for line in sys.stdin:
+
+    word, count = line.strip().split("\t")
+
+    count = int(count)
+
+    if current_word == word:
+
+        current_count += count
+
+    else:
+
+        if current_word:
+
+            print(f"{current_word}\t{current_count}")
+
+        current_word = word
+        current_count = count
+
+if current_word:
+
+    print(f"{current_word}\t{current_count}")
+
+========================================================
+INPUT FILE
+========================================================
+
+File Name : input.txt
+
+hadoop is big data
+hadoop is fast
+big data is powerful
+
+========================================================
+STEP BY STEP EXECUTION
+========================================================
+
+--------------------------------------------------------
+STEP 1 : Create Project Folder
+--------------------------------------------------------
+
+Commands:
+
+mkdir WordCount
+cd WordCount
+
+Reason:
+Creates a separate directory for Python Hadoop Streaming practical files.
+
+--------------------------------------------------------
+STEP 2 : Create Python Files
+--------------------------------------------------------
+
+Commands:
+
+gedit mapper.py
+gedit reducer.py
+gedit input.txt
+
+Reason:
+Creates Mapper, Reducer, and input files.
+Add the codes in these files.
+
+--------------------------------------------------------
+STEP 3 : Start Hadoop
+--------------------------------------------------------
+
+Command:
+
+start-all.sh
+
+Reason:
+Starts all Hadoop services such as NameNode, DataNode, ResourceManager, and NodeManager.
+
+--------------------------------------------------------
+STEP 4 : Verify Hadoop Services
+--------------------------------------------------------
+
+In New terminal (Keep the Start Hadoop running on another terminal)
+
+Command:
+
+jps
+
+Expected Output:
+
+NameNode
+DataNode
+SecondaryNameNode
+ResourceManager
+NodeManager
+
+Reason:
+Used to verify whether Hadoop services are running properly.
+
+--------------------------------------------------------
+STEP 5 : Give Execute Permission
+--------------------------------------------------------
+
+Command:
+
+chmod +x mapper.py reducer.py
+
+Reason:
+Provides executable permission to Python scripts so Hadoop Streaming can execute them.
+
+--------------------------------------------------------
+STEP 6 : Remove Old Input Directory
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -rm -r /input
+
+Reason:
+Deletes old input directory from HDFS to avoid duplicate file errors.
+
+--------------------------------------------------------
+STEP 7 : Remove Old Output Directory
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -rm -r /output
+
+Reason:
+Hadoop does not allow overwriting existing output directories. Therefore old output folder must be deleted before execution.
+
+--------------------------------------------------------
+STEP 8 : Create New Input Directory
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -mkdir /input
+
+Reason:
+Creates a new input directory inside HDFS.
+
+--------------------------------------------------------
+STEP 9 : Upload Input File
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -put input.txt /input
+
+Reason:
+Uploads local input.txt file into HDFS input directory.
+
+--------------------------------------------------------
+STEP 10 : Run Hadoop Streaming Program
+--------------------------------------------------------
+
+Command:
+
+hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-*.jar \
+-input /input/input.txt \
+-output /output \
+-mapper mapper.py \
+-reducer reducer.py
+
+Reason:
+Executes Hadoop Streaming job using Python Mapper and Reducer scripts.
+
+--------------------------------------------------------
+STEP 11 : Display Output
+--------------------------------------------------------
+
+Command:
+
+hdfs dfs -cat /output/part-00000
+
+Reason:
+Displays the final output generated by Reducer.
+
+========================================================
+EXPECTED OUTPUT
+========================================================
+
+big      2
+data     2
+fast     1
+hadoop   2
+is       3
+powerful 1
+
+========================================================
+CODE EXPLANATION
+========================================================
+
+--------------------------------------------------------
+1. Mapper Script Explanation
+--------------------------------------------------------
+
+The mapper.py script reads input from standard input.
+
+Each line is split into words using split() function.
+
+Each word is emitted as:
+
+(word,1)
+
+Example:
+
+(hadoop,1)
+
+--------------------------------------------------------
+2. Reducer Script Explanation
+--------------------------------------------------------
+
+The reducer.py script receives grouped words from Hadoop.
+
+It checks whether the current word is same as previous word.
+
+If same:
+Count is incremented.
+
+Otherwise:
+The previous word count is printed.
+
+--------------------------------------------------------
+3. Hadoop Streaming Explanation
+--------------------------------------------------------
+
+Hadoop Streaming allows non-Java languages such as Python to work with Hadoop MapReduce.
+
+Mapper and Reducer communicate through standard input and output.
+
+========================================================
+ADVANTAGES OF HADOOP STREAMING
+========================================================
+
+1. Easy to implement using Python.
+2. No Java compilation required.
+3. Supports multiple scripting languages.
+4. Faster development process.
+5. Simple debugging.
+
+========================================================
+LIMITATIONS
+========================================================
+
+1. Slightly slower than native Java MapReduce.
+2. Requires Python interpreter.
+3. Less optimized compared to Java implementation.
+
+========================================================
+VIVA QUESTIONS WITH ANSWERS
+========================================================
+
+1. What is Hadoop Streaming?
+
+Answer:
+Hadoop Streaming is a utility that allows MapReduce jobs to be written using scripting languages like Python, Perl, and Shell Script.
+
+--------------------------------------------------------
+
+2. Can Hadoop work with Python?
+
+Answer:
+Yes. Hadoop supports Python through Hadoop Streaming.
+
+--------------------------------------------------------
+
+3. What is the role of mapper.py?
+
+Answer:
+mapper.py acts as Mapper and generates key-value pairs from input data.
+
+--------------------------------------------------------
+
+4. What is the role of reducer.py?
+
+Answer:
+reducer.py acts as Reducer and combines similar keys to calculate final output.
+
+--------------------------------------------------------
+
+5. Why do we use chmod +x?
+
+Answer:
+It gives executable permission to Python scripts.
+
+--------------------------------------------------------
+
+6. Why is Hadoop Streaming used?
+
+Answer:
+It allows users to write MapReduce programs without Java.
+
+--------------------------------------------------------
+
+7. What is standard input in Hadoop Streaming?
+
+Answer:
+Standard input is the input stream through which Hadoop sends data to Mapper and Reducer scripts.
+
+--------------------------------------------------------
+
+8. What is standard output in Hadoop Streaming?
+
+Answer:
+Standard output is used by Mapper and Reducer scripts to send processed data back to Hadoop.
+
+--------------------------------------------------------
+
+9. What is MapReduce?
+
+Answer:
+MapReduce is a programming model used for processing large datasets in parallel.
+
+--------------------------------------------------------
+
+10. What are the phases of MapReduce?
+
+Answer:
+1. Mapper Phase
+2. Shuffle and Sort Phase
+3. Reducer Phase
+
+--------------------------------------------------------
+
+11. What is HDFS?
+
+Answer:
+HDFS stands for Hadoop Distributed File System used for distributed storage of large datasets.
+
+--------------------------------------------------------
+
+12. Why do we delete old output folders?
+
+Answer:
+Hadoop does not overwrite existing output directories.
+
+--------------------------------------------------------
+
+13. What is the use of Hadoop Streaming JAR file?
+
+Answer:
+It connects Hadoop with external Mapper and Reducer scripts.
+
+--------------------------------------------------------
+
+14. Difference between Java MapReduce and Hadoop Streaming?
+
+Answer:
+
+Java MapReduce:
+1. Uses Java classes
+2. Requires compilation
+3. Faster execution
+
+Hadoop Streaming:
+1. Uses scripting languages
+2. No compilation required
+3. Easier implementation
+
+--------------------------------------------------------
+
+15. What is distributed computing?
+
+Answer:
+Distributed computing means processing data across multiple systems simultaneously.
+
+--------------------------------------------------------
+
+16. What is fault tolerance?
+
+Answer:
+Fault tolerance is the ability of a system to continue working even after failures.
+
+--------------------------------------------------------
+
+17. Why is Hadoop used for Big Data?
+
+Answer:
+Hadoop supports distributed storage, scalability, and parallel processing of massive datasets.
+
+--------------------------------------------------------
+
+18. What is Mapper output?
+
+Answer:
+Mapper output consists of intermediate key-value pairs.
+
+Example:
+(data,1)
+
+--------------------------------------------------------
+
+19. What is Reducer output?
+
+Answer:
+Reducer output contains final aggregated results.
+
+Example:
+(data,2)
+
+--------------------------------------------------------
+
+20. What is the advantage of Python in Hadoop?
+
+Answer:
+Python provides simpler syntax and easier implementation compared to Java.
+
+========================================================
+CONCLUSION
+========================================================
+
+Thus, we successfully implemented a Hadoop Streaming MapReduce program using Python to calculate word frequency from an input text file stored in HDFS.
