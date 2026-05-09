@@ -1,0 +1,583 @@
+ASSIGNMENT NO: 5
+TITLE: Perform the Data Classification Algorithm using Classification Algorithm
+
+--------------------------------------------------------------------
+1. AIM
+--------------------------------------------------------------------
+
+To implement a data classification algorithm using Python and analyze the prediction accuracy using machine learning techniques.
+
+--------------------------------------------------------------------
+2. SOFTWARE REQUIREMENTS
+--------------------------------------------------------------------
+
+1. Ubuntu / Windows Operating System
+2. Jupyter Notebook
+3. Python
+4. Scikit-learn Library
+5. Pandas Library
+
+--------------------------------------------------------------------
+3. THEORY
+--------------------------------------------------------------------
+
+Classification is a supervised machine learning technique used to predict categorical outputs or labels.
+
+In classification:
+- Input data is trained using labeled dataset.
+- The model learns patterns from training data.
+- The trained model predicts labels for new data.
+
+Examples:
+1. Spam Detection
+2. Gender Classification
+3. Disease Prediction
+4. Fraud Detection
+5. Customer Purchase Prediction
+
+Classification algorithms use features and target labels.
+
+Feature:
+Input variable.
+
+Example:
+Height, Weight, Age
+
+Target:
+Output category.
+
+Example:
+Male/Female
+
+--------------------------------------------------------------------
+4. TYPES OF CLASSIFICATION
+--------------------------------------------------------------------
+
+=================================================
+1. BINARY CLASSIFICATION
+=================================================
+
+Only two output classes.
+
+Examples:
+- Yes / No
+- True / False
+- Spam / Not Spam
+
+-------------------------------------------------
+
+=================================================
+2. MULTI-CLASS CLASSIFICATION
+=================================================
+
+More than two classes.
+
+Examples:
+- Iris flower classification
+- Animal classification
+
+-------------------------------------------------
+
+=================================================
+3. MULTI-LABEL CLASSIFICATION
+=================================================
+
+Multiple labels for same record.
+
+Example:
+News classification.
+
+--------------------------------------------------------------------
+5. LOGISTIC REGRESSION THEORY
+--------------------------------------------------------------------
+
+Logistic Regression is a supervised classification algorithm.
+
+It predicts probability of class membership using sigmoid function.
+
+Used for:
+- Binary classification
+- Multi-class classification
+
+Advantages:
+1. Simple
+2. Fast
+3. Efficient
+4. Good accuracy
+
+Applications:
+1. Medical diagnosis
+2. Spam detection
+3. Marketing analysis
+4. Risk prediction
+
+--------------------------------------------------------------------
+6. IRIS DATASET THEORY
+--------------------------------------------------------------------
+
+Iris dataset is a famous machine learning dataset.
+
+Dataset contains:
+1. Sepal Length
+2. Sepal Width
+3. Petal Length
+4. Petal Width
+
+Target classes:
+1. Setosa
+2. Versicolor
+3. Virginica
+
+Purpose:
+Used for classification tasks.
+
+--------------------------------------------------------------------
+7. EXPLANATION OF PRACTICAL
+--------------------------------------------------------------------
+
+In this practical:
+1. Iris dataset is loaded.
+2. Dataset is converted into DataFrame.
+3. Features and target are separated.
+4. Dataset is divided into training and testing sets.
+5. Logistic Regression model is trained.
+6. Predictions are generated.
+7. Accuracy and confusion matrix are calculated.
+
+This practical demonstrates supervised learning and classification process.
+
+--------------------------------------------------------------------
+8. ALGORITHM
+--------------------------------------------------------------------
+
+Step 1:
+Import required libraries.
+
+Step 2:
+Load Iris dataset.
+
+Step 3:
+Convert dataset into DataFrame.
+
+Step 4:
+Separate features and target.
+
+Step 5:
+Split dataset into training and testing data.
+
+Step 6:
+Create Logistic Regression model.
+
+Step 7:
+Train model using training data.
+
+Step 8:
+Predict output using testing data.
+
+Step 9:
+Calculate accuracy.
+
+Step 10:
+Generate confusion matrix.
+
+--------------------------------------------------------------------
+9. CODE EXPLANATION IN DETAIL
+--------------------------------------------------------------------
+
+=================================================
+CELL 1
+=================================================
+
+Code:
+import pandas as pd
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, confusion_matrix
+
+Explanation:
+
+1. pandas:
+Used for data manipulation.
+
+2. load_iris:
+Loads Iris dataset.
+
+3. train_test_split:
+Splits dataset into training and testing sets.
+
+4. LogisticRegression:
+Classification algorithm.
+
+5. accuracy_score:
+Calculates prediction accuracy.
+
+6. confusion_matrix:
+Evaluates classification performance.
+
+Reason:
+Required for complete classification workflow.
+
+-------------------------------------------------
+
+=================================================
+CELL 2
+=================================================
+
+Code:
+iris = load_iris()
+
+data = pd.DataFrame(iris.data, columns=iris.feature_names)
+
+data['target'] = iris.target
+
+data.head()
+
+Explanation:
+
+1. load_iris():
+Loads dataset.
+
+2. DataFrame():
+Converts dataset into tabular structure.
+
+3. target column:
+Stores class labels.
+
+4. head():
+Displays first 5 rows.
+
+Reason:
+Helps inspect dataset.
+
+-------------------------------------------------
+
+=================================================
+CELL 3
+=================================================
+
+Code:
+X = data.drop('target', axis=1)
+
+y = data['target']
+
+Explanation:
+
+1. X:
+Stores feature variables.
+
+2. y:
+Stores target labels.
+
+Reason:
+Machine learning models require features and target separately.
+
+-------------------------------------------------
+
+=================================================
+CELL 4
+=================================================
+
+Code:
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+Explanation:
+
+Splits dataset into:
+- Training Data
+- Testing Data
+
+test_size=0.2:
+20% data used for testing.
+
+Reason:
+Used to evaluate model performance on unseen data.
+
+-------------------------------------------------
+
+=================================================
+CELL 5
+=================================================
+
+Code:
+model = LogisticRegression(max_iter=200)
+
+model.fit(X_train, y_train)
+
+Explanation:
+
+1. LogisticRegression():
+Creates model object.
+
+2. max_iter=200:
+Increases iterations for convergence.
+
+3. fit():
+Trains model.
+
+Reason:
+Model learns patterns from training data.
+
+-------------------------------------------------
+
+=================================================
+CELL 6
+=================================================
+
+Code:
+y_pred = model.predict(X_test)
+
+Explanation:
+
+predict():
+Generates predictions using testing data.
+
+Reason:
+Used to evaluate trained model.
+
+-------------------------------------------------
+
+=================================================
+CELL 7
+=================================================
+
+Code:
+print("Accuracy:", accuracy_score(y_test, y_pred))
+
+print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
+
+Explanation:
+
+1. accuracy_score():
+Calculates percentage of correct predictions.
+
+2. confusion_matrix():
+Shows actual vs predicted classifications.
+
+Reason:
+Evaluates model performance.
+
+--------------------------------------------------------------------
+10. WHY EACH IMPORTANT FUNCTION IS USED
+--------------------------------------------------------------------
+
+=================================================
+1. load_iris()
+=================================================
+
+Purpose:
+Loads built-in dataset.
+
+Reason:
+Provides dataset for classification.
+
+-------------------------------------------------
+
+=================================================
+2. train_test_split()
+=================================================
+
+Purpose:
+Splits dataset.
+
+Reason:
+Prevents overfitting and evaluates model.
+
+-------------------------------------------------
+
+=================================================
+3. fit()
+=================================================
+
+Purpose:
+Trains machine learning model.
+
+Reason:
+Model learns relationships from data.
+
+-------------------------------------------------
+
+=================================================
+4. predict()
+=================================================
+
+Purpose:
+Predicts output classes.
+
+Reason:
+Used for classification.
+
+-------------------------------------------------
+
+=================================================
+5. accuracy_score()
+=================================================
+
+Purpose:
+Measures model accuracy.
+
+Reason:
+Shows prediction performance.
+
+-------------------------------------------------
+
+=================================================
+6. confusion_matrix()
+=================================================
+
+Purpose:
+Displays classification results.
+
+Reason:
+Analyzes prediction errors.
+
+--------------------------------------------------------------------
+11. CONFUSION MATRIX THEORY
+--------------------------------------------------------------------
+
+Confusion Matrix is a table used to evaluate classification models.
+
+It contains:
+1. True Positive
+2. True Negative
+3. False Positive
+4. False Negative
+
+Purpose:
+Measures model performance.
+
+Advantages:
+1. Detailed evaluation
+2. Detects prediction errors
+3. Useful for accuracy analysis
+
+--------------------------------------------------------------------
+12. ADVANTAGES OF LOGISTIC REGRESSION
+--------------------------------------------------------------------
+
+1. Simple implementation
+2. Fast training
+3. Good accuracy
+4. Efficient for classification
+5. Easy interpretation
+
+--------------------------------------------------------------------
+13. APPLICATIONS OF CLASSIFICATION
+--------------------------------------------------------------------
+
+1. Spam Detection
+2. Medical Diagnosis
+3. Fraud Detection
+4. Image Recognition
+5. Customer Segmentation
+6. Sentiment Analysis
+
+--------------------------------------------------------------------
+14. POSSIBLE VIVA QUESTIONS WITH ANSWERS
+--------------------------------------------------------------------
+
+Q1. What is Classification?
+
+Answer:
+Classification is a supervised machine learning technique used to predict categories or labels.
+
+-------------------------------------------------
+
+Q2. What is Supervised Learning?
+
+Answer:
+Supervised learning uses labeled data for training.
+
+-------------------------------------------------
+
+Q3. What is Logistic Regression?
+
+Answer:
+Logistic Regression is a classification algorithm used for predicting categorical outputs.
+
+-------------------------------------------------
+
+Q4. What is Iris Dataset?
+
+Answer:
+Iris dataset is a famous machine learning dataset used for classification.
+
+-------------------------------------------------
+
+Q5. What are Features?
+
+Answer:
+Features are input variables used for prediction.
+
+-------------------------------------------------
+
+Q6. What is Target Variable?
+
+Answer:
+Target variable is the output label predicted by model.
+
+-------------------------------------------------
+
+Q7. Why is train_test_split used?
+
+Answer:
+To divide data into training and testing datasets.
+
+-------------------------------------------------
+
+Q8. What is Accuracy?
+
+Answer:
+Accuracy measures percentage of correct predictions.
+
+-------------------------------------------------
+
+Q9. What is Confusion Matrix?
+
+Answer:
+Confusion matrix evaluates classification performance.
+
+-------------------------------------------------
+
+Q10. What is Overfitting?
+
+Answer:
+Overfitting occurs when model performs well on training data but poorly on testing data.
+
+-------------------------------------------------
+
+Q11. Why is predict() used?
+
+Answer:
+predict() generates output predictions using trained model.
+
+-------------------------------------------------
+
+Q12. Difference between Classification and Clustering?
+
+Answer:
+
+Classification:
+- Supervised Learning
+- Uses labels
+
+Clustering:
+- Unsupervised Learning
+- No labels
+
+--------------------------------------------------------------------
+15. OUTPUTS OBTAINED
+--------------------------------------------------------------------
+
+1. Iris Dataset Table
+2. Training Dataset
+3. Testing Dataset
+4. Predicted Output
+5. Accuracy Score
+6. Confusion Matrix
+
+--------------------------------------------------------------------
+16. CONCLUSION
+--------------------------------------------------------------------
+
+Thus, classification algorithm was successfully implemented using Logistic Regression. The model was trained using Iris dataset and evaluated using accuracy score and confusion matrix.
