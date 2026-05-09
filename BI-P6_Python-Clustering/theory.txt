@@ -1,0 +1,509 @@
+ASSIGNMENT NO: 6
+TITLE: Perform Data Clustering Using Clustering Algorithm
+
+--------------------------------------------------------------------
+1. AIM
+--------------------------------------------------------------------
+
+To implement K-Means clustering algorithm using Python and group similar data points into clusters.
+
+--------------------------------------------------------------------
+2. SOFTWARE REQUIREMENTS
+--------------------------------------------------------------------
+
+1. Ubuntu / Windows Operating System
+2. Jupyter Notebook
+3. Python
+4. NumPy Library
+5. Matplotlib Library
+6. Scikit-learn Library
+
+--------------------------------------------------------------------
+3. THEORY
+--------------------------------------------------------------------
+
+Clustering is an unsupervised machine learning technique used to group similar data points together.
+
+In clustering:
+- No labeled data is used.
+- Similar data points are grouped into clusters.
+- Different clusters contain dissimilar data points.
+
+Purpose:
+To identify hidden patterns and structures in data.
+
+Applications:
+1. Customer Segmentation
+2. Market Analysis
+3. Image Segmentation
+4. Recommendation Systems
+5. Fraud Detection
+6. Pattern Recognition
+
+--------------------------------------------------------------------
+4. CLUSTERING THEORY
+--------------------------------------------------------------------
+
+Clustering groups data based on similarity.
+
+Rules:
+1. Similar points should belong to same cluster.
+2. Different points should belong to different clusters.
+
+Clustering is useful when:
+- Labels are unavailable.
+- Data patterns need to be discovered.
+
+--------------------------------------------------------------------
+5. K-MEANS ALGORITHM THEORY
+--------------------------------------------------------------------
+
+K-Means is one of the most popular clustering algorithms.
+
+The algorithm divides data into K clusters.
+
+K:
+Represents number of clusters.
+
+Each cluster has:
+- Centroid (center point)
+
+The algorithm tries to minimize distance between:
+- Data points
+- Cluster centroids
+
+--------------------------------------------------------------------
+6. STEPS OF K-MEANS ALGORITHM
+--------------------------------------------------------------------
+
+Step 1:
+Choose number of clusters (K).
+
+Step 2:
+Initialize centroids randomly.
+
+Step 3:
+Assign each data point to nearest centroid.
+
+Step 4:
+Recalculate centroids.
+
+Step 5:
+Repeat until centroids stop changing.
+
+--------------------------------------------------------------------
+7. EXPLANATION OF PRACTICAL
+--------------------------------------------------------------------
+
+In this practical:
+1. A dataset is created using NumPy.
+2. K-Means algorithm is applied.
+3. Data points are grouped into clusters.
+4. Cluster labels are generated.
+5. Centroids are calculated.
+6. Clusters are visualized using scatter plot.
+
+This practical demonstrates unsupervised learning and clustering process.
+
+--------------------------------------------------------------------
+8. ALGORITHM
+--------------------------------------------------------------------
+
+Step 1:
+Import required libraries.
+
+Step 2:
+Create dataset.
+
+Step 3:
+Initialize K-Means model.
+
+Step 4:
+Fit model to dataset.
+
+Step 5:
+Generate cluster labels.
+
+Step 6:
+Calculate centroids.
+
+Step 7:
+Visualize clusters using scatter plot.
+
+Step 8:
+Analyze clustered data.
+
+--------------------------------------------------------------------
+9. CODE EXPLANATION IN DETAIL
+--------------------------------------------------------------------
+
+=================================================
+CELL 1
+=================================================
+
+Code:
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+
+Explanation:
+
+1. numpy:
+Used for numerical computations and array creation.
+
+2. matplotlib.pyplot:
+Used for graph visualization.
+
+3. KMeans:
+K-Means clustering algorithm from sklearn.
+
+Reason:
+Required for clustering implementation and visualization.
+
+-------------------------------------------------
+
+=================================================
+CELL 2
+=================================================
+
+Code:
+X = np.array([
+    [1,2], [1,4], [1,0],
+    [10,2], [10,4], [10,0]
+])
+
+Explanation:
+
+Creates sample dataset.
+
+Dataset contains:
+- 2 features
+- Multiple data points
+
+Reason:
+Provides input data for clustering.
+
+-------------------------------------------------
+
+=================================================
+CELL 3
+=================================================
+
+Code:
+kmeans = KMeans(n_clusters=2)
+
+kmeans.fit(X)
+
+Explanation:
+
+1. KMeans():
+Creates K-Means model.
+
+2. n_clusters=2:
+Creates 2 clusters.
+
+3. fit():
+Trains clustering model.
+
+Reason:
+Model learns cluster patterns from data.
+
+-------------------------------------------------
+
+=================================================
+CELL 4
+=================================================
+
+Code:
+labels = kmeans.labels_
+
+centroids = kmeans.cluster_centers_
+
+print("Cluster Labels:", labels)
+
+print("Centroids:\n", centroids)
+
+Explanation:
+
+1. labels_:
+Stores cluster number for each point.
+
+2. cluster_centers_:
+Stores centroid coordinates.
+
+Reason:
+Used to analyze clustering results.
+
+-------------------------------------------------
+
+=================================================
+CELL 5
+=================================================
+
+Code:
+plt.scatter(X[:,0], X[:,1], c=labels)
+
+plt.scatter(
+    centroids[:,0],
+    centroids[:,1],
+    marker='X',
+    s=200
+)
+
+plt.title("K-Means Clustering")
+
+plt.xlabel("Feature 1")
+
+plt.ylabel("Feature 2")
+
+plt.show()
+
+Explanation:
+
+1. scatter():
+Plots data points.
+
+2. c=labels:
+Colors points according to cluster.
+
+3. marker='X':
+Displays centroids.
+
+4. s=200:
+Increases centroid size.
+
+Reason:
+Visualizes clusters clearly.
+
+--------------------------------------------------------------------
+10. WHY EACH IMPORTANT FUNCTION IS USED
+--------------------------------------------------------------------
+
+=================================================
+1. np.array()
+=================================================
+
+Purpose:
+Creates dataset array.
+
+Reason:
+Stores numerical data efficiently.
+
+-------------------------------------------------
+
+=================================================
+2. KMeans()
+=================================================
+
+Purpose:
+Creates clustering model.
+
+Reason:
+Implements K-Means algorithm.
+
+-------------------------------------------------
+
+=================================================
+3. fit()
+=================================================
+
+Purpose:
+Trains clustering model.
+
+Reason:
+Learns cluster structure.
+
+-------------------------------------------------
+
+=================================================
+4. labels_
+=================================================
+
+Purpose:
+Returns cluster labels.
+
+Reason:
+Identifies cluster membership.
+
+-------------------------------------------------
+
+=================================================
+5. cluster_centers_()
+=================================================
+
+Purpose:
+Returns centroid coordinates.
+
+Reason:
+Represents cluster centers.
+
+-------------------------------------------------
+
+=================================================
+6. scatter()
+=================================================
+
+Purpose:
+Creates scatter plot.
+
+Reason:
+Visualizes clusters graphically.
+
+--------------------------------------------------------------------
+11. CLUSTERING VS CLASSIFICATION
+--------------------------------------------------------------------
+
+| Classification                | Clustering                    |
+|--------------------------------|--------------------------------|
+| Supervised Learning            | Unsupervised Learning         |
+| Uses labeled data              | No labeled data               |
+| Predicts categories            | Groups similar data           |
+| Example: Spam Detection        | Example: Customer Segmentation |
+
+--------------------------------------------------------------------
+12. CENTROID THEORY
+--------------------------------------------------------------------
+
+Centroid:
+Center point of cluster.
+
+Purpose:
+Represents average position of cluster points.
+
+K-Means updates centroids repeatedly until convergence.
+
+--------------------------------------------------------------------
+13. ADVANTAGES OF K-MEANS
+--------------------------------------------------------------------
+
+1. Simple implementation
+2. Fast execution
+3. Efficient for large datasets
+4. Easy visualization
+5. Good clustering performance
+
+--------------------------------------------------------------------
+14. LIMITATIONS OF K-MEANS
+--------------------------------------------------------------------
+
+1. Sensitive to outliers
+2. Requires predefined K value
+3. May converge to local optimum
+4. Not suitable for non-spherical clusters
+
+--------------------------------------------------------------------
+15. APPLICATIONS OF CLUSTERING
+--------------------------------------------------------------------
+
+1. Customer Segmentation
+2. Image Compression
+3. Recommendation Systems
+4. Fraud Detection
+5. Social Network Analysis
+6. Pattern Recognition
+
+--------------------------------------------------------------------
+16. POSSIBLE VIVA QUESTIONS WITH ANSWERS
+--------------------------------------------------------------------
+
+Q1. What is Clustering?
+
+Answer:
+Clustering is an unsupervised machine learning technique used to group similar data points.
+
+-------------------------------------------------
+
+Q2. What is K-Means?
+
+Answer:
+K-Means is a clustering algorithm that partitions data into K clusters.
+
+-------------------------------------------------
+
+Q3. What is K in K-Means?
+
+Answer:
+K represents number of clusters.
+
+-------------------------------------------------
+
+Q4. What is Unsupervised Learning?
+
+Answer:
+Unsupervised learning works without labeled data.
+
+-------------------------------------------------
+
+Q5. What is Centroid?
+
+Answer:
+Centroid is the center point of cluster.
+
+-------------------------------------------------
+
+Q6. What is fit() used for?
+
+Answer:
+fit() trains clustering model using dataset.
+
+-------------------------------------------------
+
+Q7. Why is scatter plot used?
+
+Answer:
+Scatter plot visualizes clusters graphically.
+
+-------------------------------------------------
+
+Q8. Difference between Classification and Clustering?
+
+Answer:
+
+Classification:
+Uses labeled data.
+
+Clustering:
+Uses unlabeled data.
+
+-------------------------------------------------
+
+Q9. What are cluster labels?
+
+Answer:
+Cluster labels represent cluster assignment for each data point.
+
+-------------------------------------------------
+
+Q10. What is the purpose of cluster_centers_?
+
+Answer:
+Returns coordinates of cluster centroids.
+
+-------------------------------------------------
+
+Q11. Why is K-Means popular?
+
+Answer:
+K-Means is simple, fast, and effective for clustering tasks.
+
+-------------------------------------------------
+
+Q12. What happens if K value changes?
+
+Answer:
+Changing K changes number of clusters formed.
+
+--------------------------------------------------------------------
+17. OUTPUTS OBTAINED
+--------------------------------------------------------------------
+
+1. Dataset
+2. Cluster Labels
+3. Centroids
+4. Scatter Plot Visualization
+
+--------------------------------------------------------------------
+18. CONCLUSION
+--------------------------------------------------------------------
+
+Thus, K-Means clustering algorithm was successfully implemented using Python. Similar data points were grouped into clusters and visualized using scatter plot.

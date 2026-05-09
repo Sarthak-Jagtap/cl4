@@ -1,0 +1,125 @@
+PRACTICAL 6 - UPDATED CODE.TXT
+
+=================================================
+CELL 1
+=================================================
+
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+
+=================================================
+CELL 2
+=================================================
+
+# Creating larger dataset for better clustering visualization
+
+X = np.array([
+
+    # Cluster 1
+    [1,2],
+    [2,1],
+    [2,3],
+    [3,2],
+    [3,3],
+    [4,2],
+    [4,4],
+    [5,3],
+
+    # Cluster 2
+    [10,10],
+    [11,9],
+    [11,11],
+    [12,10],
+    [12,12],
+    [13,11],
+    [14,10],
+    [15,12],
+
+    # Cluster 3
+    [20,2],
+    [21,3],
+    [22,2],
+    [22,4],
+    [23,3],
+    [24,2],
+    [25,4],
+    [26,3]
+
+])
+
+print(X)
+
+=================================================
+CELL 3
+=================================================
+
+# Create K-Means model
+
+kmeans = KMeans(n_clusters=3)
+
+# Train model
+
+kmeans.fit(X)
+
+=================================================
+CELL 4
+=================================================
+
+# Get cluster labels
+
+labels = kmeans.labels_
+
+# Get centroids
+
+centroids = kmeans.cluster_centers_
+
+print("Cluster Labels:")
+
+print(labels)
+
+print("\nCentroids:")
+
+print(centroids)
+
+=================================================
+CELL 5
+=================================================
+
+# Scatter plot for clustered data
+
+plt.scatter(
+    X[:,0],
+    X[:,1],
+    c=labels,
+    s=100
+)
+
+# Plot centroids
+
+plt.scatter(
+    centroids[:,0],
+    centroids[:,1],
+    marker='X',
+    s=300
+)
+
+plt.title("K-Means Clustering")
+
+plt.xlabel("Feature 1")
+
+plt.ylabel("Feature 2")
+
+plt.grid(True)
+
+plt.show()
+
+=================================================
+EXPECTED OUTPUT
+=================================================
+
+1. Three clearly visible clusters
+2. Different colors for each cluster
+3. Large X markers representing centroids
+4. Better scatter plot visualization
+5. Easier understanding during viva/demo
