@@ -1,0 +1,658 @@
+ASSIGNMENT NO: 4
+TITLE: Data Analysis and Visualization using Advanced Excel
+
+--------------------------------------------------------------------
+1. AIM
+--------------------------------------------------------------------
+
+To perform data analysis and visualization using Advanced Excel features such as charts, graphs, and pivot tables.
+
+--------------------------------------------------------------------
+2. SOFTWARE REQUIREMENTS
+--------------------------------------------------------------------
+
+1. Microsoft Excel / LibreOffice Calc
+2. Windows / Ubuntu Operating System
+3. CSV Dataset
+
+--------------------------------------------------------------------
+3. THEORY
+--------------------------------------------------------------------
+
+Data Visualization is the graphical representation of data using charts, graphs, and tables.
+
+Visualization helps:
+1. Understand trends
+2. Compare values
+3. Identify patterns
+4. Detect outliers
+5. Improve decision making
+
+Excel provides various visualization tools such as:
+- Bar Charts
+- Column Charts
+- Line Charts
+- Pie Charts
+- Scatter Plots
+- Pivot Tables
+
+These charts convert raw numerical data into meaningful visual information.
+
+--------------------------------------------------------------------
+4. EXPLANATION OF PRACTICAL
+--------------------------------------------------------------------
+
+In this practical, sales dataset is analyzed using Advanced Excel.
+
+The dataset contains:
+- Monthly Sales
+- TVs Sales
+- Mobile Phones Sales
+- Laptop Sales
+- Total Sales
+
+Different charts are created to visualize:
+- Product-wise comparison
+- Monthly trends
+- Percentage distribution
+- Relationship between variables
+
+Pivot Table is also used for data summarization.
+
+This practical demonstrates how Excel can be used for business reporting and visualization.
+
+--------------------------------------------------------------------
+5. DATASET USED
+--------------------------------------------------------------------
+
+Dataset File:
+practical4_dataset.csv
+
+Dataset Columns:
+1. ID
+2. Month
+3. TVs
+4. Mobile_Phones
+5. Laptops
+6. Total
+
+--------------------------------------------------------------------
+6. ALGORITHM
+--------------------------------------------------------------------
+
+Step 1:
+Open dataset in Excel.
+
+Step 2:
+Verify rows and columns.
+
+Step 3:
+Create Total column.
+
+Step 4:
+Create Bar Chart.
+
+Step 5:
+Create Column Chart.
+
+Step 6:
+Create Line Chart.
+
+Step 7:
+Create Pie Chart.
+
+Step 8:
+Create Scatter Plot.
+
+Step 9:
+Create Pivot Table.
+
+Step 10:
+Analyze charts and reports.
+
+--------------------------------------------------------------------
+7. STEPS TO EXECUTE PRACTICAL
+--------------------------------------------------------------------
+
+=================================================
+A) IMPORT DATASET
+=================================================
+
+Step 1:
+Open Microsoft Excel or LibreOffice Calc.
+
+Step 2:
+Click:
+File → Open
+
+Step 3:
+Select:
+practical4_dataset.csv
+
+Step 4:
+Dataset opens in spreadsheet.
+
+Step 5:
+Verify rows and columns.
+
+-------------------------------------------------
+
+OUTPUT:
+- Dataset Table
+
+--------------------------------------------------------------------
+8. VISUALIZATION THEORY
+--------------------------------------------------------------------
+
+Visualization converts numerical data into graphical format.
+
+Advantages:
+1. Easy understanding
+2. Faster analysis
+3. Trend identification
+4. Better reporting
+
+Visualization Types Used:
+1. Bar Chart
+2. Column Chart
+3. Line Chart
+4. Pie Chart
+5. Scatter Plot
+6. Pivot Table
+
+--------------------------------------------------------------------
+9. SHORT OVERVIEW OF VISUALIZATION IN EXCEL
+--------------------------------------------------------------------
+
+=================================================
+HOW TO CREATE VISUALIZATION
+=================================================
+
+Step 1:
+Select dataset.
+
+Step 2:
+Click:
+Insert Tab
+
+Step 3:
+Select chart type.
+
+Step 4:
+Excel automatically creates graph.
+
+Step 5:
+Modify chart title, labels, and colors.
+
+-------------------------------------------------
+
+=================================================
+HOW TO SELECT GRAPH TYPE
+=================================================
+
+Bar Chart:
+Used for comparison.
+
+Column Chart:
+Used for vertical comparison.
+
+Line Chart:
+Used for trends over time.
+
+Pie Chart:
+Used for percentage distribution.
+
+Scatter Plot:
+Used to analyze relationship between variables.
+
+Pivot Table:
+Used for summarization and analysis.
+
+--------------------------------------------------------------------
+10. VISUALIZATION STEPS IN DETAIL
+--------------------------------------------------------------------
+
+=================================================
+A) BAR CHART
+=================================================
+
+Purpose:
+Compare product sales.
+
+-------------------------------------------------
+
+Step 1:
+Select columns:
+- Month
+- TVs
+- Mobile_Phones
+- Laptops
+
+Step 2:
+Click:
+Insert → Bar Chart
+
+Step 3:
+Select:
+Clustered Bar Chart
+
+Step 4:
+Bar chart appears.
+
+Step 5:
+Add title:
+"Product Sales Comparison"
+
+-------------------------------------------------
+
+Fields Used:
+Axis:
+Month
+
+Values:
+TVs, Mobile_Phones, Laptops
+
+-------------------------------------------------
+
+OUTPUT:
+- Bar Chart
+
+--------------------------------------------------------------------
+
+=================================================
+B) COLUMN CHART
+=================================================
+
+Purpose:
+Vertical comparison of product sales.
+
+-------------------------------------------------
+
+Step 1:
+Select dataset.
+
+Step 2:
+Click:
+Insert → Column Chart
+
+Step 3:
+Select:
+Clustered Column Chart
+
+Step 4:
+Chart is generated.
+
+Step 5:
+Edit title and labels.
+
+-------------------------------------------------
+
+Fields Used:
+X-Axis:
+Month
+
+Y-Axis:
+Sales Values
+
+-------------------------------------------------
+
+OUTPUT:
+- Column Chart
+
+--------------------------------------------------------------------
+
+=================================================
+C) LINE CHART
+=================================================
+
+Purpose:
+Analyze monthly sales trends.
+
+-------------------------------------------------
+
+Step 1:
+Select:
+Month and Total columns.
+
+Step 2:
+Click:
+Insert → Line Chart
+
+Step 3:
+Select:
+Line with Markers
+
+Step 4:
+Chart appears.
+
+Step 5:
+Add chart title:
+"Monthly Sales Trend"
+
+-------------------------------------------------
+
+Fields Used:
+X-Axis:
+Month
+
+Y-Axis:
+Total Sales
+
+-------------------------------------------------
+
+OUTPUT:
+- Line Chart
+
+--------------------------------------------------------------------
+
+=================================================
+D) PIE CHART
+=================================================
+
+Purpose:
+Analyze sales distribution.
+
+-------------------------------------------------
+
+Step 1:
+Calculate total sales of:
+- TVs
+- Mobile Phones
+- Laptops
+
+Step 2:
+Select totals.
+
+Step 3:
+Click:
+Insert → Pie Chart
+
+Step 4:
+Select:
+2-D Pie Chart
+
+Step 5:
+Enable:
+Data Labels → Percentage
+
+-------------------------------------------------
+
+Fields Used:
+Categories:
+Products
+
+Values:
+Total Sales
+
+-------------------------------------------------
+
+OUTPUT:
+- Pie Chart
+
+--------------------------------------------------------------------
+
+=================================================
+E) SCATTER PLOT
+=================================================
+
+Purpose:
+Analyze relationship between two variables.
+
+-------------------------------------------------
+
+Step 1:
+Select:
+TVs and Laptops columns.
+
+Step 2:
+Click:
+Insert → Scatter Plot
+
+Step 3:
+Select:
+Scatter with Markers
+
+Step 4:
+Scatter graph appears.
+
+-------------------------------------------------
+
+Fields Used:
+X-Axis:
+TVs
+
+Y-Axis:
+Laptops
+
+-------------------------------------------------
+
+OUTPUT:
+- Scatter Plot
+
+--------------------------------------------------------------------
+
+=================================================
+F) PIVOT TABLE
+=================================================
+
+Purpose:
+Summarize data.
+
+-------------------------------------------------
+
+Step 1:
+Select complete dataset.
+
+Step 2:
+Click:
+Insert → Pivot Table
+
+Step 3:
+Choose:
+New Worksheet
+
+Step 4:
+Drag:
+- Month → Rows
+- Total → Values
+
+Step 5:
+Pivot table is created.
+
+-------------------------------------------------
+
+OUTPUT:
+- Pivot Table
+
+--------------------------------------------------------------------
+11. EXPLANATION OF IMPORTANT EXCEL FEATURES
+--------------------------------------------------------------------
+
+=================================================
+1. INSERT TAB
+=================================================
+
+Purpose:
+Used to insert charts, tables, and visuals.
+
+Reason:
+Required for visualization.
+
+-------------------------------------------------
+
+=================================================
+2. CHARTS
+=================================================
+
+Purpose:
+Represent data graphically.
+
+Reason:
+Improves understanding.
+
+-------------------------------------------------
+
+=================================================
+3. DATA LABELS
+=================================================
+
+Purpose:
+Display values on chart.
+
+Reason:
+Improves readability.
+
+-------------------------------------------------
+
+=================================================
+4. PIVOT TABLE
+=================================================
+
+Purpose:
+Summarizes large data.
+
+Reason:
+Fast analysis and reporting.
+
+-------------------------------------------------
+
+=================================================
+5. SCATTER PLOT
+=================================================
+
+Purpose:
+Shows relationship between variables.
+
+Reason:
+Helps identify correlation.
+
+--------------------------------------------------------------------
+12. ADVANTAGES OF DATA VISUALIZATION
+--------------------------------------------------------------------
+
+1. Easy interpretation
+2. Quick analysis
+3. Better reporting
+4. Pattern recognition
+5. Trend identification
+6. Improved business decisions
+
+--------------------------------------------------------------------
+13. APPLICATIONS OF EXCEL VISUALIZATION
+--------------------------------------------------------------------
+
+1. Sales Analysis
+2. Inventory Management
+3. Financial Reporting
+4. Business Dashboards
+5. Marketing Analysis
+6. Educational Reporting
+
+--------------------------------------------------------------------
+14. POSSIBLE VIVA QUESTIONS WITH ANSWERS
+--------------------------------------------------------------------
+
+Q1. What is Data Visualization?
+
+Answer:
+Data Visualization is graphical representation of data using charts and graphs.
+
+-------------------------------------------------
+
+Q2. Why is visualization important?
+
+Answer:
+Visualization helps identify patterns, trends, and insights easily.
+
+-------------------------------------------------
+
+Q3. Difference between Bar Chart and Column Chart?
+
+Answer:
+
+Bar Chart:
+Horizontal representation.
+
+Column Chart:
+Vertical representation.
+
+-------------------------------------------------
+
+Q4. What is a Line Chart used for?
+
+Answer:
+Line chart is used to analyze trends over time.
+
+-------------------------------------------------
+
+Q5. What is a Pie Chart?
+
+Answer:
+Pie chart represents percentage distribution of data.
+
+-------------------------------------------------
+
+Q6. What is Scatter Plot?
+
+Answer:
+Scatter plot shows relationship between two variables.
+
+-------------------------------------------------
+
+Q7. What is Pivot Table?
+
+Answer:
+Pivot table summarizes and analyzes large datasets.
+
+-------------------------------------------------
+
+Q8. Why are charts used?
+
+Answer:
+Charts simplify data interpretation and improve analysis.
+
+-------------------------------------------------
+
+Q9. What is the use of Data Labels?
+
+Answer:
+Data labels display values directly on chart.
+
+-------------------------------------------------
+
+Q10. Which chart is best for trends?
+
+Answer:
+Line chart is best for trend analysis.
+
+-------------------------------------------------
+
+Q11. Which chart is best for comparison?
+
+Answer:
+Bar chart and column chart are best for comparison.
+
+-------------------------------------------------
+
+Q12. What is correlation?
+
+Answer:
+Correlation shows relationship between two variables.
+
+--------------------------------------------------------------------
+15. OUTPUTS OBTAINED
+--------------------------------------------------------------------
+
+1. Dataset Table
+2. Bar Chart
+3. Column Chart
+4. Line Chart
+5. Pie Chart
+6. Scatter Plot
+7. Pivot Table
+
+--------------------------------------------------------------------
+16. CONCLUSION
+--------------------------------------------------------------------
+
+Thus, data analysis and visualization were successfully performed using Advanced Excel features such as charts, scatter plots, and pivot tables. The visualizations helped analyze sales trends, comparisons, and distributions effectively.
